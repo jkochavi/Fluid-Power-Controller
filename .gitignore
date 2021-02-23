@@ -15,5 +15,5 @@ src/readCustomCommands.cpp
 src/taskqueue.h
 src/taskshare.h
 src/trigger.h
-src/doxygen.conf
+doxygen.conf
 src/mainpage.dox
