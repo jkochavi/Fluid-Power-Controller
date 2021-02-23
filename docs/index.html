@@ -87,9 +87,13 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="title">Cal Poly NFPA Vehicle Challenge Documentation</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h1><a class="anchor" id="s_intro"></a>
-Introduction</h1>
-<p>Welcome to the official support documentation for Cal Poly's NFPA Fluid Powered Vehicle Challenge team! On this wiki, you will find references and files for various elements of the vehicle's mechatronics system. This wiki will expand as future teams iterate on existing design work. Ownership of the wiki is transferred to the new team; the current team's name and logo are visible on this page as well. </p>
+<div class="textblock"><h1><a class="anchor" id="s_overview"></a>
+Wiki Overview</h1>
+<p>Welcome to the official support documentation for Cal Poly's NFPA Fluid Powered Vehicle Challenge team! On this wiki, you will find references and files for various elements of the vehicle's mechatronics system. This wiki will expand as future teams iterate on existing design work. Ownership of the wiki is transferred to the new team; the current team's name and logo are visible on this page as well.</p>
+<h1><a class="anchor" id="s_intro"></a>
+Project Introduction</h1>
+<p>This report discusses the design and prototyping of a custom CAN node user interface for the electronic control system on a hydraulically-powered vehicle. The vehicle’s hydraulic circuit consists of five solenoid valves, which are actuated in combinations to achieve different vehicle behaviors. A rider applies human power input to the vehicle using a standard bicycle crankset. The crankset’s shaft is coupled with a hydraulic pump that draws fluid from a pressure- neutral reservoir. The pump circulates fluid through a bi-directional hydraulic motor that propels the vehicle. The rider can also release fluid from a pressurized accumulator that applies a “boost” to the vehicle’s speed.</p>
+<p>Existing hydraulic and electronic components are provided by HydraForce, Inc. Sourcing all components from a single company lends itself to a well-integrated mechatronics system. However, its functionality is not expandable beyond fluid power control. The system’s industrial Programmable Logic Controller (PLC) only has one inter-controller communication peripheral: CAN bus, and cannot be programmed using open-source languages, such as C++ or Python. This project offers a low-cost, open-source user interface for this mechatronics system using CAN bus. </p>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
