@@ -16,4 +16,5 @@ src/taskqueue.h
 src/taskshare.h
 src/trigger.h
 doxygen.conf
+src/doxygen.conf
 src/mainpage.dox
