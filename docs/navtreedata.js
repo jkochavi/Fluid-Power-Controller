@@ -27,6 +27,12 @@ var NAVTREE =
   [ "Cal Poly NFPA Vehicle Challenge", "index.html", [
     [ "Wiki Overview", "index.html#s_overview", null ],
     [ "Project Introduction", "index.html#s_intro", null ],
+    [ "Existing Work", "index.html#s_existing", null ],
+    [ "Project Requirements", "index.html#s_requirements", null ],
+    [ "Existing Solutions", "index.html#s_existingSolutions", null ],
+    [ "Microcontroller Selection", "index.html#s_uc", null ],
+    [ "CAN Communication Hardware", "index.html#s_CAN", null ],
+    [ "Display Selection", "index.html#s_display", null ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
