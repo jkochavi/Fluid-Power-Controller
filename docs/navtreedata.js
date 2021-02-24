@@ -36,6 +36,7 @@ var NAVTREE =
     [ "Printed Circuit Board Design", "index.html#s_PCB", null ],
     [ "System Power Supply", "index.html#s_buck", null ],
     [ "Software Design", "index.html#s_software", null ],
+    [ "Enclosure Design", "index.html#s_enclosures", null ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [

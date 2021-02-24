@@ -142,7 +142,7 @@ Display Selection</h1>
 <p>In order to design a graphically-pleasing interface that can display text to the rider in clear, large fonts, two full-color LCD options were explored: A 2.8 inch Adafruit touch screen with the ILI9341 LCD driver, and a 2.8 inch Nextion touch screen. Both options are significantly smaller than the OPUS A3F display unit and can be easily driven by a microcontroller programmed with the Arduino framework. The LCD breakout module of Figure 9 is a low-cost, generic version of an Adafruit Arduino Uno shield. The LCD is driven by the ILI9341 LCD driver, which communicates with a microcontroller over SPI. The breakout module also has a resistive touch screen and SD card slot for displaying bitmap images. This module is easy to use with the Adafruit Graphics Library, which is a suite of Arduino code designed to communicate with several Adafruit display products. Its ease of programmability allows for the quick design of complex shapes and text designs, and the LCD’s resolution and brightness are comparable to that of Nextion displays.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig9.png" alt="" style="width:200px;height:120;" class="inline"/> <br  />
 <b>Figure 9.</b> 2.8 inch LCD with ILI9341 driver.</p>
-<p>Since this product is nearly three times as cheap as the Nextion display, it was tested first with an Arduino Nano. A skeleton interface was written in C++ and uploaded to an Arduino Nano using the Arduino IDE. The software, which is located in Appendix A, uses the Adafruit Graphics Library to write data to the screen. The result, shown in Figure 10, was visibly very slow because the Adafruit library uses blocking code to write each shape to the screen. In other words, it was only capable of drawing one independent shape or character at a time without the ability to multitask between communication and pixel-writing.</p>
+<p>Since this product is nearly three times as cheap as the Nextion display, it was tested first with an Arduino Nano. A skeleton interface was written in C++ and uploaded to an Arduino Nano using the Arduino IDE. The software uses the Adafruit Graphics Library to write data to the screen. The result, shown in Figure 10, was visibly very slow because the Adafruit library uses blocking code to write each shape to the screen. In other words, it was only capable of drawing one independent shape or character at a time without the ability to multitask between communication and pixel-writing.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig10.png" alt="" style="width:400px;height:240;" class="inline"/> <br  />
 <b>Figure 10.</b> Prototyping with a 2.8 inch LCD with ILI9341 driver and Arduino Nano.</p>
 <p>The screen latency was measured as the time elapsed between writing different types of shapes to the screen. Measurements were acquired with the Arduino function, millis(), to calculate a difference in time measurements before and after a shape is written to the screen. The results are quantified in Table 1.</p>
@@ -199,8 +199,56 @@ Software Design</h1>
 <p>Where <em>D</em> is the wheel diameter and <em>V</em> is the vehicle’s translational velocity. Using a conservative maximum speed of 45 mph for the human-powered vehicle and a wheel diameter of 26 inches,</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig21.png" alt="" style="width:360px;" class="inline"/></p>
 <p>In order to ensure that the sensor task will catch the sensor trigger without fail, it is best practice to poll 5 times faster than the maximum period or settling time. Therefore, a 20 ms timing period was selected.</p>
+<p><b>CAN Communication Software</b><br  />
+</p>
+<p>The STM32 transmits and receives packets of data from the ECDR 0506-A using the MCP2515 library written by GitHub user, <a href="https://github.com/autowp/arduino-mcp2515">autowp</a>. Messages to and from the ECDR 0506-A are transmitted in bytes. Each CAN frame has an 11 bit message ID. The STM32 first identifies the ECDR 0506-A with the message ID, and then constructs and sends a message. The code below sends a button press in 1 byte of data. The function, sendMessage(), transmits the message through the MCP2515 controller. </p><pre class="fragment">if (buttonState != previousButtonState_CAN)
+{
+    struct can_frame canMSG;                              // Create a CAN message structure
+    canMSG.can_id = 0x181;                                // Assign a unique message ID
+    canMSG.can_dlc = 1;                                   // Define the message length as 1 byte 
+    if      (buttonState == 0) {canMSG.data[0] = 0x01;}   // If buttonState is 0...      then send a 1
+    else if (buttonState == 1) {canMSG.data[0] = 0x02;}   // Else if buttonState is 1... then send a 2
+    else if (buttonState == 2) {canMSG.data[0] = 0x03;}   // Else if buttonState is 2... then send a 3
+    else if (buttonState == 3) {canMSG.data[0] = 0x04;}   // Else if buttonState is 3... then send a 4
+    node.sendMessage(&amp;canMSG);                            // Send the message
+    previousButtonState_CAN = buttonState;                // Reset to prevent continuous transmitting
+}
+</pre><p><b>Nextion Communication Software</b><br  />
+</p>
+<p>The Nextion display’s RTOS assigns an ID to each item on the screen. A text box may have the ID, t0, and a button may have the ID, b0. Each element on the screen is an instance of a class object: t0 is an instance of the text box class and b0 is an instance of the button class. The STM32 interacts with the display by modifying the attributes of its elements. For example, to change the value of n0 on the screen, the STM32 would send a command like, n0.val = 10. This command modifies the “value” attribute of the number object, which is subsequently updated on the display. Communication between the STM32 and the Nextion display is achieved over a UART connection with the Easy Nextion Library, written by GitHub user, <a href="https://github.com/Seithan/EasyNextionLibrary">Seithan</a>. The code below sends two numbers to be printed on the display. </p><pre class="fragment">myNextion.writeNum("n0.val",localVar_bikeSpeed);                     //     Write the speed to the display
+myNextion.writeNum("n1.val",localVar_accumulatorPressure);           //     Write the pressure to the display
+</pre><p><b>Graphical User Interface Design</b><br  />
+</p>
+<p>The display’s Graphical User Interface was designed in Nextion Editor. It consists of one home page that displays all relevant data to the user, which includes the speed of the vehicle, pressure measurements from the ECDR 0506-A, and solenoid valve statuses. The touch screen can be used to access additional pages, which will be expanded upon in future work. Screen captures of all navigable pages currently installed on the display are shown in Figure 19.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig22.png" alt="" style="width:1000px;" class="inline"/> <br  />
+<b>Figure 19.</b> Screen captures of three pages from the interface’s GUI.</p>
+<h1><a class="anchor" id="s_enclosures"></a>
+Enclosure Design</h1>
+<p>The user interface is separated into three components housed in 3D printed enclosures: the display and PCB, and two button modules. An enclosure was also designed for the step-down DC buck converter that provides power to the interface. All 3D parts were printed with a Bibo 2 Touch 3D printer.</p>
+<p><b>Display Enclosure</b><br  />
+</p>
+<p>The main interface houses the Nextion display and custom PCB. Shown in Figure 20, the enclosure is hinged to provide access to the circuit board. To connect to the PCB’s screw pin terminals, the user must unhinge the display to expose its circuitry. Hiding the PCB terminals and connections improves its weather resistance.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig23.png" alt="" style="width:600px;" class="inline"/> <br  />
+<b>Figure 20.</b> Render of 3D printed interface enclosure.</p>
+<p>Narrow, rectangular slots allow for wires to leave the enclosure. A removable cap with three round holes is attached to the bottom of the enclosure with M2 screws. This cap allows for the user to conveniently snap the JST button connections into place without having to unhinge the display. Shown in Figure 21, the enclosure is secured by M2 screws and heat-set brass inserts. The inserts allow for machine screws to be threaded directly into 3D printed parts and are installed with a soldering iron.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig24.png" alt="" style="width:600px;" class="inline"/> <br  />
+<b>Figure 21.</b> Exploded view of 3D printed interface enclosure.</p>
+<p><b>Button Module Enclosure</b><br  />
+</p>
+<p>The button modules are placed in ergonomic locations on the vehicle to allow the operator to easily press a button while driving. Shown in Figure 22, the button enclosure has a single hole for its signal wires to leave. The rest of the enclosure completely hides its circuit board. <br  />
+</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig25.png" alt="" style="width:300px;" class="inline"/> <br  />
+<b>Figure 22.</b> Render of 3D printed button module enclosure.</p>
+<p>Like the interface enclosure, the button enclosure is secured by M2 screws and threaded brass inserts. Shown in Figure 23, the rectangular button covers are held captive inside the enclosure by a slot that prevents them from slipping out.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig26.png" alt="" style="width:300px;" class="inline"/> <br  />
+<b>Figure 23.</b> Exploded view of 3D printed button module enclosure.</p>
+<p><b>DC Buck Enclosure</b><br  />
+</p>
+<p>An enclosure was designed for the buck converter of Figure 16 to hide its circuitry and improve its weather resistance. Since the enclosure, shown in Figure 24, will not be as exposed to the elements as the interface and button enclosures, the screw pin terminals and display were left uncovered.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig27.png" alt="" style="width:350px;" class="inline"/> <br  />
+<b>Figure 24.</b> Render of 3D printed enclosure for DC buck converter.</p>
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>February 23, 2021 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>February 24, 2021 </dd></dl>
 </div></div><!-- PageDoc -->
 </div><!-- contents -->
 </div><!-- doc-content -->
