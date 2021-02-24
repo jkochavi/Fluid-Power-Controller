@@ -33,6 +33,9 @@ var NAVTREE =
     [ "Microcontroller Selection", "index.html#s_uc", null ],
     [ "CAN Communication Hardware", "index.html#s_CAN", null ],
     [ "Display Selection", "index.html#s_display", null ],
+    [ "Printed Circuit Board Design", "index.html#s_PCB", null ],
+    [ "System Power Supply", "index.html#s_buck", null ],
+    [ "Software Design", "index.html#s_software", null ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [

@@ -99,11 +99,11 @@ Project Introduction</h1>
 Existing Work</h1>
 <p>The existing mechatronics system uses a HydraForce ECDR 0506-A electronic valve driver. The vehicle’s operator provides input to the system using three push-buttons, which each represent a unique combination of valve actuations. The ECDR 0506-A, shown in Figure 1, has six inputs, which can be configured to receive an analog voltage or current. With three inputs used for push-buttons, the controller is only capable of reading up to three pressure sensors. An additional CAN node that could relay button presses to the central controller would allow it to interface with additional sensors and inputs.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig1.png" alt="" style="width:400px;height:320px;" class="inline"/> <br  />
-<b>Figure 1</b> Existing mechatronics system with the ECDR 0506-A valve driver.</p>
+<b>Figure 1.</b> Existing mechatronics system with the ECDR 0506-A valve driver.</p>
 <p>A screen capture of part of the programming for the PLC is shown in Figure 2. The software used for this controller is HF Impulse, which is a tool designed by HydraForce to program their controllers. <br  />
 </p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig2.png" alt="" style="width:530px;height:300px;" class="inline"/> <br  />
-<b>Figure 2</b> Screen capture of block programming for the ECDR 0506-A. <br  />
+<b>Figure 2.</b> Screen capture of block programming for the ECDR 0506-A. <br  />
 </p>
 <h1><a class="anchor" id="s_requirements"></a>
 Project Requirements</h1>
@@ -112,20 +112,20 @@ Project Requirements</h1>
 <h1><a class="anchor" id="s_existingSolutions"></a>
 Existing Solutions</h1>
 <p>Two existing solutions were considered: an OPUS A3F Wachendorff Display Unit, and a SparkFun Arduino CAN shield. The OPUS display unit is a standalone controller that can communicate with other controllers over a CAN bus. Shown in Figure 3, the display has eight configurable button inputs, a pressable rotary knob, and three additional buttons for navigating an interface. It has a 4.3 inch LCD and touchscreen and has a standard DB-9 connector that can be plugged directly into the ECDR 0506-A.</p>
-<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig3.png" alt="" style="width:400px;height:250px;" class="inline"/> <br  />
-<b>Figure 3</b> OPUS A3F Wachendorff Display Unit.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig3.png" alt="" style="width:300px;" class="inline"/> <br  />
+<b>Figure 3.</b> OPUS A3F Wachendorff Display Unit.</p>
 <p>The SparkFun CAN shield is designed to add a CAN communication ability to an Arduino Uno. Shown in Figure 4, it fits over the footprint of an Arduino Uno, and contains an MCP2515 CAN controller and MCP2551 CAN transceiver circuit. Like the OPUS A3F, it carries a standard DB-9 connector that can be plugged directly into the ECDR 0506-A. The breakout module also has a micro-SD card port, a joystick, and an additional port to connect to a SparkFun GPS breakout module.</p>
-<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig4.png" alt="" style="width:350px;height:300px;" class="inline"/> <br  />
-<b>Figure 4</b> SparkFun CAN bus shield for Arduino Uno.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig4.png" alt="" style="width:300px;" class="inline"/> <br  />
+<b>Figure 4.</b> SparkFun CAN bus shield for Arduino Uno.</p>
 <p>This product’s main advantage is that SparkFun has already written Arduino code for interfacing with it. SparkFun provides clear and open-source documentation that allows for quick software debugging. However, this product limits the system’s microcontroller to an Arduino Uno’s ATmega328. Discussed further in <a class="el" href="index.html#s_uc">Microcontroller Selection</a>, the Arduino Uno may be insufficient for navigating a complex user interface with a Real Time Operating System (RTOS).</p>
 <h1><a class="anchor" id="s_uc"></a>
 Microcontroller Selection</h1>
 <p>This section describes the selection process for the CAN node’s microcontroller and its other hardware components. The Arduino framework in C++ was chosen as this project’s software basis. The Arduino framework is well-documented, open-source, and can be used to program a variety of microcontrollers and development boards. Two microcontrollers were considered: an ATmega328, and an STM32. ATmega328, produced by Atmel, is an 8-bit AVR microcontroller commonly found on Arduino modules. STM32 is a family of 32-bit ARM microcontrollers produced by STMicroelectronics. Both ATmega328 and STM32 microcontrollers are available on development boards that carry small footprints. Shown in Figure 5, the Arduino Nano and Blue Pill development boards are both relatively small and carry many useful software and hardware peripherals.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig5.png" alt="" style="width:350px;height:150px;" class="inline"/> <br  />
-<b>Figure 5</b> Arduino Nano with ATmega328 (left) and STM32 Blue Pill (right).</p>
+<b>Figure 5.</b> Arduino Nano with ATmega328 (left) and STM32 Blue Pill (right).</p>
 <p>The biggest advantage of using an Arduino development board, such as the Arduino Nano of Figure 4, is that its microcontroller is preloaded with the Arduino bootloader. This allows the programmer to upload C++ code directly to the board, which its bootloader uses to program the microcontroller. Conversely, most STM32 development boards require the use of the ST-Link programmer, which is a dedicated controller produced by STMicroelectronics that programs an STM32 in its machine code. Some development boards, such as the Nucleo L476RG, have a built-in ST-Link circuit, however the Blue Pill of Figure 4 carries too small of a footprint to have space for the programmer module.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig6.png" alt="" style="width:350px;height:220px;" class="inline"/> <br  />
-<b>Figure 6</b> ST-Link programmer used to program the STM32 Blue Pill development board.</p>
+<b>Figure 6.</b> ST-Link programmer used to program the STM32 Blue Pill development board.</p>
 <p>The ST-Link programmer is a separate module, shown above in Figure 1.2.4, that interfaces with an Integrated Development Environment (IDE) on a PC. While the Arduino Nano can simply be programmed from its USB port, the Blue Pill must be programmed using a serial connection to the ST-Link, as it does not have a bootloader.</p>
 <p>Although the Arduino Nano is easier to program, its ATmega328 carries less processing power than the STM32. As an 8-bit microcontroller, it is not ideal for an RTOS and also has fewer communication peripherals. For example, the Arduino Nano only has one USART port, while the Blue Pill’s STM32F103 has three. Furthermore, the Arduino Nano may be clocked up to 16 MHz, while the Blue Pill may be clocked up to 72 MHz. Given the tradeoff of ease of programmability and processing power between the Arduino Nano and Blue Pill development boards, it was prudent to design and prototype with both before choosing a final design.</p>
 <h1><a class="anchor" id="s_CAN"></a>
@@ -133,21 +133,72 @@ CAN Communication Hardware</h1>
 <p>While the STM32F103 on the Blue Pill has a built-in CAN controller, it cannot be easily accessed with the Arduino framework. To access its CAN peripheral, the microcontroller must be programmed using STM32CubeIDE, which is an IDE produced by STMicroelectronics. To keep the project as open-source as possible, an external CAN controller was chosen, which allows the microcontroller to be programmed in any IDE using the Arduino framework.</p>
 <p>The MCP2515 CAN controller was chosen because it is well-documented with many different open-source C++ libraries. In order to communicate with a CAN bus, the MCP2515 receives commands from a microcontroller using a Serial Peripheral Interface (SPI), and then transmits a CAN message using a CAN transceiver. Two transceivers were considered: the MCP2551 and TJA1050. Shown in Figure 7, the two integrated circuits are housed in slightly different packages and have different pinouts.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig7.png" alt="" style="width:350px;height:220px;" class="inline"/> <br  />
-<b>Figure 7</b> MCP2551 (left) and TJA1050 (right) CAN transceivers.</p>
+<b>Figure 7.</b> MCP2551 (left) and TJA1050 (right) CAN transceivers.</p>
 <p>Aside from their physical differences, the transceivers are functionally the same and are both compatible with the MCP2515 CAN controller. The MCP2551 is used on the SparkFun product of Figure 4, while the TJA1050 is used on a standalone CAN breakout module of Figure 8.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig8.png" alt="" style="width:200px;height:120;" class="inline"/> <br  />
-<b>Figure 8</b> MCP2515 and TJA1050 CAN bus breakout module.</p>
+<b>Figure 8.</b> MCP2515 and TJA1050 CAN bus breakout module.</p>
 <h1><a class="anchor" id="s_display"></a>
 Display Selection</h1>
 <p>In order to design a graphically-pleasing interface that can display text to the rider in clear, large fonts, two full-color LCD options were explored: A 2.8 inch Adafruit touch screen with the ILI9341 LCD driver, and a 2.8 inch Nextion touch screen. Both options are significantly smaller than the OPUS A3F display unit and can be easily driven by a microcontroller programmed with the Arduino framework. The LCD breakout module of Figure 9 is a low-cost, generic version of an Adafruit Arduino Uno shield. The LCD is driven by the ILI9341 LCD driver, which communicates with a microcontroller over SPI. The breakout module also has a resistive touch screen and SD card slot for displaying bitmap images. This module is easy to use with the Adafruit Graphics Library, which is a suite of Arduino code designed to communicate with several Adafruit display products. Its ease of programmability allows for the quick design of complex shapes and text designs, and the LCD’s resolution and brightness are comparable to that of Nextion displays.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig9.png" alt="" style="width:200px;height:120;" class="inline"/> <br  />
-<b>Figure 9</b> 2.8 inch LCD with ILI9341 driver.</p>
+<b>Figure 9.</b> 2.8 inch LCD with ILI9341 driver.</p>
 <p>Since this product is nearly three times as cheap as the Nextion display, it was tested first with an Arduino Nano. A skeleton interface was written in C++ and uploaded to an Arduino Nano using the Arduino IDE. The software, which is located in Appendix A, uses the Adafruit Graphics Library to write data to the screen. The result, shown in Figure 10, was visibly very slow because the Adafruit library uses blocking code to write each shape to the screen. In other words, it was only capable of drawing one independent shape or character at a time without the ability to multitask between communication and pixel-writing.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig10.png" alt="" style="width:400px;height:240;" class="inline"/> <br  />
-<b>Figure 10</b> Prototyping with a 2.8 inch LCD with ILI9341 driver and Arduino Nano.</p>
+<b>Figure 10.</b> Prototyping with a 2.8 inch LCD with ILI9341 driver and Arduino Nano.</p>
 <p>The screen latency was measured as the time elapsed between writing different types of shapes to the screen. Measurements were acquired with the Arduino function, millis(), to calculate a difference in time measurements before and after a shape is written to the screen. The results are quantified in Table 1.</p>
-<p><b>Table 1</b> Screen latency of Adafruit Graphics Library with ILI9341 LCD.<br  />
- <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig11.png" alt="" style="width:400px;height:240;" class="inline"/></p>
+<p><b>Table 1.</b> Screen latency of Adafruit Graphics Library with ILI9341 LCD.<br  />
+ <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig11.png" alt="" style="width:300px;height:180;" class="inline"/></p>
+<p>Even if a faster microcontroller were used with this LCD, the latency produced by the Adafruit library would still make it difficult to interact with in a timely manner. Writing custom software to interface with the screen would alleviate its latency, however it would be more efficient to proceed with a different LCD with faster, existing software. The Nextion display differs from a standard LCD driver because it has its own microprocessor with an RTOS. This allows it to multitask independent of the system’s master microcontroller, which results in fast screen refresh rates. A microcontroller communicates with this screen using a UART connection, which is shown in Figure 11 as a 2-wire connection with additional wires for ground and power.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig12.png" alt="" style="width:200px;height:120;" class="inline"/> <br  />
+<b>Figure 11.</b> Nextion LCD.</p>
+<p>Its functions and screen layout are configured in Nextion Editor, which is a free HMI tool developed by Nextion to program their display modules. The software, shown in Figure 12, allows the programmer to drag-and-drop buttons, images, and text onto the screen. This is a much simpler process than using line code to write each individual pixel or shape. Furthermore, Nextion displays can be easily communicated with using Arduino code. A programmer can use standard serial communication code in either C++ or Python to send commands to the screen.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig13.png" alt="" style="width:600px;height:240;" class="inline"/> <br  />
+<b>Figure 12.</b> Nextion Editor HMI software.</p>
+<p>While its robust configuration tool gives Nextion displays a greater ease of programmability, another required piece of software adds a layer of complexity to the project. The mechatronics system already requires the use of HF Impulse to configure the PLC and a C++ development environment to program the microcontroller. A third programming software would further complicate debugging efforts because it requires the programmer to sift through three different platforms to diagnose problems with a single system.</p>
+<h1><a class="anchor" id="s_PCB"></a>
+Printed Circuit Board Design</h1>
+<p>During prototyping with both Arduino Nano and Blue Pill development boards, two viable Printed Circuit Boards (PCBs) were designed. One PCB includes an Arduino Nano with the MCP2515 CAN controller and MCP2551 transceiver, and the other PCB includes a Blue Pill with the MCP2515 CAN controller and TJA1050 transceiver. After considering both options, the Blue Pill was chosen.</p>
+<p><b>PCB With Arduino Nano</b><br  />
+</p>
+<p>This PCB implements most of the components on the SparkFun CAN shield of Figure 1.3.2. SparkFun publishes open-source schematics of their products. The PCB, shown in Figure 13, contains a CAN communication circuit with the MCP2515 and MCP22551 integrated circuits. In addition, the PCB has a serial port to connect to a Nextion display and JST snap-fit connectors to connect to the push-buttons. The pairs of push-buttons are isolated on independent ground planes, separated by milled slots. This allows both pairs of switches to be detached from the main board and placed in a more convenient location for the vehicle’s rider. To preserve space, this PCB was designed to fit directly beneath a Nextion display, so both components could be stacked on top of each other.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig14.png" alt="" style="width:600px;height:240;" class="inline"/> <br  />
+<b>Figure 13.</b> PCB design with Arduino Nano.</p>
+<p><b>PCB With Blue Pill</b><br  />
+</p>
+<p>This PCB uses the CAN circuit on the breakout module in Figure 8, which contains the MCP2515 and TJA1050 integrated circuits. While its overall size is slightly larger than the PCB with the Arduino Nano, it still fits underneath a Nextion display. This PCB, shown in Figure 14, features a similar push-button layout and screw pin terminals for power input and CAN transmission. A polarized capacitor is also placed closed to the power terminals to act as a high frequency noise filter, which reduces noise in the CAN signals.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig15.png" alt="" style="width:600px;height:240;" class="inline"/> <br  />
+<b>Figure 14.</b> PCB design with STM32 Blue Pill.</p>
+<p>Aside from the difference in microcontrollers and CAN transceivers, both circuit boards are functionally identical. After prototyping with the Arduino Nano, this board was ultimately selected because of the STM32’s increased performance abilities. Another advantage of selecting an STM32 over an ATmega328 is its abundance of serial peripherals. Shown in Figure 15, the RX/TX port is configured in software to print debugging information to a serial monitor. If the user encounters a problem with the interface, they can simply connect to the PCB’s serial port to monitor its software and communication.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig16.png" alt="" style="width:600px;height:240;" class="inline"/> <br  />
+<b>Figure 15.</b> Render of custom circuit board with STM32 Blue Pill.</p>
+<p>After designing the circuit board layout in Autodesk Eagle, a 3D model was created in Autodesk Fusion 360 in order to accurately dimension a 3D printed enclosure. A render of the circuit board is shown in Figure 15. Populating the circuit board with 3D models, which were obtained from GrabCAD, allowed for more accurate enclosure modeling. The PCB interfaces with its peripherals using a combination of screw pin terminals and JST snap-fit connectors. Screw pin terminals are effective for tightly securing power connections and long-distance signals. JST snap-fit connectors were chosen for the button modules to allow for quick disconnecting.</p>
+<h1><a class="anchor" id="s_buck"></a>
+System Power Supply</h1>
+<p>The ECDR 0506-A is powered by a 14.8V LiPo battery. The LM2596 DC buck converter was selected to provide power to the interface controller from the same battery source. The step-down converter, shown in Figure 16, features a display that can show either its voltage output or input. The voltage output can be adjusted using a brass potentiometer knob. Having a variable voltage step-down converter with a display helps debug power issues with the mechatronics system. Viewing its voltage input will alert the rider if the vehicle’s battery is low, and its voltage output will indicate if the interface controller is being provided with sufficient power.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig17.png" alt="" style="width:200px;" class="inline"/> <br  />
+<b>Figure 16.</b> Variable output LM2596 DC buck converter.</p>
+<h1><a class="anchor" id="s_software"></a>
+Software Design</h1>
+<ul>
+<li>Source: <a href="https://github.com/jkochavi/Fluid-Power-Controller">https://github.com/jkochavi/Fluid-Power-Controller</a></li>
+<li>Documentation:<ul>
+<li><a class="el" href="Interface_8cpp.html">Interface.cpp</a></li>
+<li><a class="el" href="Interface_8h.html">Interface.h</a></li>
+<li><a class="el" href="main_8cpp.html">main.cpp</a></li>
+</ul>
+</li>
+</ul>
+<p>This section describes the software design for the STM32 that communicates with the Nextion display and the ECDR 0506-A. The STM32 relays button presses to the ECDR 0506-A over a CAN bus, and receives a pressure measurement from the ECDR 0506-A. The STM32 relays the button presses, pressure measurements, and the vehicle speed to the display. A schematic of inter-controller interactions is shown in Figure 17. The dashed outline represents the system boundary of the STM32’s software. The circled components are passive and are read using hardware interrupts and polling.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig18.png" alt="" style="width:400px;" class="inline"/> <br  />
+<b>Figure 17.</b> Inter-controller system boundary diagram.</p>
+<p>Software for the STM32 uses FreeRTOS, which is an open-source RTOS that works well with STM32 microcontrollers and the Arduino framework. The code is structured into three high-level tasks: display communication, CAN communication, and sensor measurement. In addition, each button is tied to a hardware interrupt.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig19.png" alt="" style="width:400px;" class="inline"/> <br  />
+<b>Figure 18.</b> Inter-controller system boundary diagram.</p>
+<p>Shown in Figure 18, the display task receives information from the CAN and sensor tasks, which is subsequently relayed to the Nextion display. The display task runs every 15 ms, the CAN task runs every 30 ms, and the sensor task runs every 20 ms. Timing is most critical for the sensor task. The sensor task periodically checks the status of a GPIO pin attached to a hall effect sensor, which is used to measure the speed of a 26-inch bicycle wheel. The task must check the sensor frequently enough such that it doesn’t miss a trigger. The maximum timing period for the sensor task is calculated using the equation,</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig20.png" alt="" style="width:125px;" class="inline"/></p>
+<p>Where <em>D</em> is the wheel diameter and <em>V</em> is the vehicle’s translational velocity. Using a conservative maximum speed of 45 mph for the human-powered vehicle and a wheel diameter of 26 inches,</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig21.png" alt="" style="width:360px;" class="inline"/></p>
+<p>In order to ensure that the sensor task will catch the sensor trigger without fail, it is best practice to poll 5 times faster than the maximum period or settling time. Therefore, a 20 ms timing period was selected.</p>
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>February 23, 2021 </dd></dl>
 </div></div><!-- PageDoc -->
