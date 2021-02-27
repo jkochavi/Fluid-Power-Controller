@@ -44,7 +44,7 @@ uint8_t previousButtonState_CAN = 255;                      // Init to force CAN
 /// these values in a buffer makes up for any mismatch
 /// in transmission frequencies between the PLC and this
 /// controller. 
-Queue <int32_t> accumulatorPressure(100,"buffer");
+Queue <int32_t> accumulatorPressure(10,"buffer");
 /// Queue for storing bike speed values. Storing these values 
 /// in a buffer makes up for any mismatch in transmission 
 /// frequencies between the display and hall effect tasks.
@@ -148,7 +148,7 @@ void CAN_sendPress(MCP2515 &node)
     if (buttonState != previousButtonState_CAN)
     {
         struct can_frame canMSG;                              // Create a CAN message structure
-        canMSG.can_id = 0x181;                                // Assign a unique message ID
+        canMSG.can_id = 0x181;                                // COB-ID for transmitting a PDO message
         canMSG.can_dlc = 1;                                   // Define the message length as 1 byte 
         if      (buttonState == 0) {canMSG.data[0] = 0x01;}   // If buttonState is 0...      then send a 1
         else if (buttonState == 1) {canMSG.data[0] = 0x02;}   // Else if buttonState is 1... then send a 2
@@ -178,12 +178,16 @@ int32_t CAN_readPressure(MCP2515 &node)
     struct can_frame CANmsg;                            // Create a CAN message structure
     if (node.readMessage(&CANmsg)== MCP2515::ERROR_OK)  // If we are able to read the message without error...
     {                                                   //      Then, check the message ID.
-        if (CANmsg.can_id == 0x181)                     //      If the ID is 0x181...
+        if (CANmsg.can_id == 385)                       //      If the ID is 0x301, COB-ID for receiving PDO2 message...
         {                                               //
-            int32_t lowByte = CANmsg.data[0];           //              Then store the low byte
-            int32_t highByte = CANmsg.data[1];          //              And store the high byte
+            int32_t highByte = CANmsg.data[0];           //              Then store the low byte
+            int32_t lowByte = CANmsg.data[1];          //              And store the high byte
             returnVal = lowByte | (highByte<<8);        //              Concatenate into one number
         }                                               //
+        else
+        {
+            returnVal = CANmsg.can_id;
+        }
     }                                                   //
     return returnVal;                                   // Return the number
 }
@@ -279,8 +283,11 @@ void task_CAN (void* p_params)
     {                                                  //
         CAN_sendPress(my2515);                         //       Send the current drive mode
         localVarPressure = CAN_readPressure(my2515);   //       Read the current pressure
-        accumulatorPressure.put(localVarPressure);     //       Push current pressure to the buffer
-        vTaskDelay(2);                                 //       Delay 2 RTOS ticks
+        if (localVarPressure > 0)                      // If the obtained pressure did not generate errors... 
+        {                                              //
+            accumulatorPressure.put(localVarPressure); //       Push current pressure to the buffer
+        }                                              //
+        vTaskDelay(1);                                 //       Delay 2 RTOS ticks
     }
 }
 
