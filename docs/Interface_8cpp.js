@@ -6,7 +6,7 @@ var Interface_8cpp =
     [ "directButton", "Interface_8cpp.html#a8a64b24d507d8ddff6aa9fb1e2a4879d", null ],
     [ "HALL1", "Interface_8cpp.html#abe94cf4e3630fe1c4a543d69b0cd01a6", null ],
     [ "regenButton", "Interface_8cpp.html#a19f61c5c02d0fdae4e4085521c810c37", null ],
-    [ "accumulatorPressure", "Interface_8cpp.html#a658fc91dc182f0a2752bf006e0336fbd", null ],
+    [ "accumulatorPressure", "Interface_8cpp.html#a8d140b5e57fe37be73abb1c25e24700e", null ],
     [ "bikeSpeed", "Interface_8cpp.html#a6e34bc0efb904bd9dd43d2062460a9a9", null ],
     [ "CAN_readPressure", "Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae", null ],
     [ "CAN_sendPress", "Interface_8cpp.html#aa8686a378ae63586440852b7a15bf41e", null ],
