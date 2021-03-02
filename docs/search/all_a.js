@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['updatedrivemode_20',['updateDriveMode',['../Interface_8cpp.html#a758e3e40f550649d6594bb1c53073dcc',1,'Interface.cpp']]]
+  ['setup_19',['setup',['../main_8cpp.html#a4fc01d736fe50cf5b977f755b675f11d',1,'main.cpp']]]
 ];
