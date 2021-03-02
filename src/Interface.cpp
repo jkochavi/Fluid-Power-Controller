@@ -138,7 +138,7 @@ void ISRregen()
  *           send one transmission to the CAN bus whenever a button is
  *           pressed, instead of continuously. To sent the message, we
  *           construct a CAN message that is only one byte long, with 
- *           the ID of 0x0F6, an arbitrary hex number. On the other end,
+ *           the ID of 0x181, an arbitrary hex number. On the other end,
  *           the PLC will first read the ID of the message, and then 
  *           interpret its data. 
  *  @param node The MCP2515 controller that we are interfacing with.
@@ -162,7 +162,7 @@ void CAN_sendPress(MCP2515 &node)
 /** @brief   Function to read the accumulator pressure from the PLC.
  *  @details This function reads the CAN bus for the accumulator pressure.
  *           The PLC transmits a pressure reading in a 2 byte message with 
- *           ID 0x036, another arbitrary hex number. The message needs to be 
+ *           ID 0x181, another arbitrary hex number. The message needs to be 
  *           2 bytes long because the accumulator pressure can be up to 
  *           3000 psi, which requires 2 bytes. To retrieve the measurement,
  *           we need to read each byte, one at a time. The PLC sends the low
@@ -178,10 +178,10 @@ int32_t CAN_readPressure(MCP2515 &node)
     struct can_frame CANmsg;                            // Create a CAN message structure
     if (node.readMessage(&CANmsg)== MCP2515::ERROR_OK)  // If we are able to read the message without error...
     {                                                   //      Then, check the message ID.
-        if (CANmsg.can_id == 385)                       //      If the ID is 0x301, COB-ID for receiving PDO2 message...
+        if (CANmsg.can_id == 385)                       //      If the ID is 385, COB-ID for receiving PDO1 message...
         {                                               //
-            int32_t highByte = CANmsg.data[0];           //              Then store the low byte
-            int32_t lowByte = CANmsg.data[1];          //              And store the high byte
+            int32_t highByte = CANmsg.data[0];          //              Then store the low byte
+            int32_t lowByte = CANmsg.data[1];           //              And store the high byte
             returnVal = lowByte | (highByte<<8);        //              Concatenate into one number
         }                                               //
         else
