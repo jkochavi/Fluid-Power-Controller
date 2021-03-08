@@ -97,9 +97,14 @@ $(document).ready(function(){initNavTree('page2.html',''); initResizable(); });
 <div class="title">HF Impulse </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The purpose of this page is to describe the software design for the ECDR 0506-A. The controller is programmed in HF Impuse, which is a configuration tool produced by Hydraforce.</p>
+<div class="textblock"><p>The purpose of this page is to describe the software design for the ECDR 0506-A. The controller is programmed in HF Impuse, which is a configuration tool produced by Hydraforce. A screen capture of the HF Impulse software used for this project is shown below. This software was modified on 3/8/21, and may not be the exact version that is installed on the ECDR 0506-A. However, its general struture and layout has remained largely unchanged since 3/4/21, so it is still an effective reference image.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/PLCprogram.png" alt="" style="width:2000px;" class="inline"/></p>
+<p>The CANopen RX block is configured to receive a single, 1 digit number. This is accomplished by looking for a message that is 4 bits long. The settings for the CANopen RX block are shown in the image below. The ECDR 0506-A scans for a message with ID 385, or hex 181. It extracts 4 bits of data from the message, which is indicated by a specified data length of 4 bits. The start bit requires some trial and error, as it is still a little unclear as to how the ECDR parses a CANopen message. However, a start bit of 0 for this type of message has been confirmed to work well. Finally, the timeout block is set to its maximum value. After 65535 milliseconds (a little over a minute), the output of the RX block will revert to 0.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/Receive_PDO.png" alt="" style="width:500px;" class="inline"/></p>
+<p>The CANopen TX block is configured to transmit an unsigned integer, ranging from 0 to 255. This is accomplished by sending 8 bits of data with the message ID of 385. In this case, the start bit is set to 8. Here, the message timeout has no effect on the transmitted message, so it has been set to 5 milliseconds. When a TX timeout occurs, it raises a timeout flag to the ECDR 0506-A's internal fault detection system.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/Transmit_PDO.png" alt="" style="width:500px;" class="inline"/></p>
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>March 4, 2021 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>March 8, 2021 </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
