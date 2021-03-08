@@ -150,10 +150,10 @@ void CAN_sendPress(MCP2515 &node)
         struct can_frame canMSG;                              // Create a CAN message structure
         canMSG.can_id = 0x181;                                // COB-ID for transmitting a PDO message
         canMSG.can_dlc = 1;                                   // Define the message length as 1 byte 
-        if      (buttonState == 0) {canMSG.data[0] = 0x01;}   // If buttonState is 0...      then send a 1
-        else if (buttonState == 1) {canMSG.data[0] = 0x02;}   // Else if buttonState is 1... then send a 2
-        else if (buttonState == 2) {canMSG.data[0] = 0x03;}   // Else if buttonState is 2... then send a 3
-        else if (buttonState == 3) {canMSG.data[0] = 0x04;}   // Else if buttonState is 3... then send a 4
+        if      (buttonState == 1) {canMSG.data[0] = 0x01;}   // If buttonState is 0...      then send a 1
+        else if (buttonState == 2) {canMSG.data[0] = 0x02;}   // Else if buttonState is 1... then send a 2
+        else if (buttonState == 3) {canMSG.data[0] = 0x03;}   // Else if buttonState is 2... then send a 3
+        else if (buttonState == 4) {canMSG.data[0] = 0x04;}   // Else if buttonState is 3... then send a 4
         node.sendMessage(&canMSG);                            // Send the message
         previousButtonState_CAN = buttonState;                // Reset to prevent continuous transmitting
     }
@@ -184,10 +184,6 @@ int32_t CAN_readPressure(MCP2515 &node)
             int32_t lowByte = CANmsg.data[1];           //              And store the high byte
             returnVal = lowByte | (highByte<<8);        //              Concatenate into one number
         }                                               //
-        else
-        {
-            returnVal = CANmsg.can_id;
-        }
     }                                                   //
     return returnVal;                                   // Return the number
 }
@@ -209,25 +205,30 @@ void updateDriveMode(EasyNex &display)
     uint32_t checkPage = display.readNumber("va1.val");             // Read the value of va1.
     if (buttonState != previousButtonState_DSP && checkPage == 0)   // If we are on the home page and a button was pressed...
     {                                                               //
-        if (buttonState == COAST)                                   //      If we're in coast mode...
+        if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
-            display.writeStr("t0.txt","Coast");                     //          Then, update the text accordingly.
+            display.writeStr("t0.txt","Direct");                    //          Then, update the text accordingly.
             display.writeNum("va0.val",0);                          //          Update Nextion's corresponding counter variable.
         }                                                           //
-        else if (buttonState == DIRECT)                             //      Else if we're in direct mode...
+        else if (buttonState == COAST)                              //      Else if we're in coast mode...
         {                                                           //          
-            display.writeStr("t0.txt","Direct");                    //          Then, update the text accordingly
+            display.writeStr("t0.txt","Coast");                     //          Then, update the text accordingly
             display.writeNum("va0.val",1);                          //          Update Nextion's corresponding counter variable.
-        }                                                           // 
-        else if (buttonState == BOOST)                              //      Else if we're in boost mode...
-        {                                                           //      
-            display.writeStr("t0.txt","Boost");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",2);                          //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == REGEN)                              //      Else if we're in regen mode...
         {                                                           //      
             display.writeStr("t0.txt","Regen");                     //          Then, update the text accordingly
+            display.writeNum("va0.val",2);                          //          Update Nextion's corresponding counter variable
+        }                                                           // 
+        else if (buttonState == BOOST)                              //      Else if we're in boost mode...
+        {                                                           //      
+            display.writeStr("t0.txt","Boost");                     //          Then, update the text accordingly
             display.writeNum("va0.val",3);                          //          Update Nextion's corresponding counter variable
+        }                                                           // 
+        else if (buttonState == PEDAL)                              //      Else if we're in pedal charge mode...
+        {                                                           //      
+            display.writeStr("t0.txt","Pedel");                     //          Then, update the text accordingly
+            display.writeNum("va0.val",5);                          //          Update Nextion's corresponding counter variable
         }                                                           //
         previousButtonState_DSP = buttonState;                      // Reset to prevent continuous transmitting
     }
