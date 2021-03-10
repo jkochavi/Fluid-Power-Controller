@@ -150,10 +150,11 @@ void CAN_sendPress(MCP2515 &node)
         struct can_frame canMSG;                              // Create a CAN message structure
         canMSG.can_id = 0x181;                                // COB-ID for transmitting a PDO message
         canMSG.can_dlc = 1;                                   // Define the message length as 1 byte 
-        if      (buttonState == 1) {canMSG.data[0] = 0x01;}   // If buttonState is 0...      then send a 1
-        else if (buttonState == 2) {canMSG.data[0] = 0x02;}   // Else if buttonState is 1... then send a 2
-        else if (buttonState == 3) {canMSG.data[0] = 0x03;}   // Else if buttonState is 2... then send a 3
-        else if (buttonState == 4) {canMSG.data[0] = 0x04;}   // Else if buttonState is 3... then send a 4
+        if      (buttonState == 1) {canMSG.data[0] = 0x01;}   // If buttonState is 1...      then send a 1
+        else if (buttonState == 2) {canMSG.data[0] = 0x02;}   // Else if buttonState is 2... then send a 2
+        else if (buttonState == 3) {canMSG.data[0] = 0x03;}   // Else if buttonState is 3... then send a 3
+        else if (buttonState == 4) {canMSG.data[0] = 0x04;}   // Else if buttonState is 4... then send a 4
+        else if (buttonState == 5) {canMSG.data[0] = 0x05;}   // Else if buttonState is 5... then send a 5
         node.sendMessage(&canMSG);                            // Send the message
         previousButtonState_CAN = buttonState;                // Reset to prevent continuous transmitting
     }
@@ -174,7 +175,7 @@ void CAN_sendPress(MCP2515 &node)
  */
 int32_t CAN_readPressure(MCP2515 &node)
 {
-    int32_t returnVal = 9999;                           // Arbitrary error value
+    int32_t returnVal = CAN_ERROR;                           // Error value
     struct can_frame CANmsg;                            // Create a CAN message structure
     if (node.readMessage(&CANmsg)== MCP2515::ERROR_OK)  // If we are able to read the message without error...
     {                                                   //      Then, check the message ID.
@@ -208,22 +209,22 @@ void updateDriveMode(EasyNex &display)
         if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
             display.writeStr("t0.txt","Direct");                    //          Then, update the text accordingly.
-            display.writeNum("va0.val",0);                          //          Update Nextion's corresponding counter variable.
+            display.writeNum("va0.val",1);                          //          Update Nextion's corresponding counter variable.
         }                                                           //
         else if (buttonState == COAST)                              //      Else if we're in coast mode...
         {                                                           //          
             display.writeStr("t0.txt","Coast");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",1);                          //          Update Nextion's corresponding counter variable.
+            display.writeNum("va0.val",2);                          //          Update Nextion's corresponding counter variable.
         }                                                           // 
         else if (buttonState == REGEN)                              //      Else if we're in regen mode...
         {                                                           //      
             display.writeStr("t0.txt","Regen");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",2);                          //          Update Nextion's corresponding counter variable
+            display.writeNum("va0.val",3);                          //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == BOOST)                              //      Else if we're in boost mode...
         {                                                           //      
             display.writeStr("t0.txt","Boost");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",3);                          //          Update Nextion's corresponding counter variable
+            display.writeNum("va0.val",4);                          //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == PEDAL)                              //      Else if we're in pedal charge mode...
         {                                                           //      
@@ -270,6 +271,12 @@ void task_display (void* p_params)
  *  @details This task sends the current user-chosen drive mode to the 
  *           PLC, and reads the accumulator pressure, using the CAN bus.
  *           We interface with the CAN bus using an MCP2515 controller.
+ *           On the custom PCB, the MCP2515 controller uses an 8 MHz 
+ *           crystal to clock the CAN bitrate. However, the mcp2515.cpp and
+ *           mcp2515.h files clock the bitrate using a 16 MHz crystal. 
+ *           This parameter was altered in those files to set the correct
+ *           bitrate. That modification is not documented, as the files are
+ *           from a different source.
  *  @param   p_params A pointer to function parameters which we don't use.
  */
 void task_CAN (void* p_params)
@@ -284,11 +291,11 @@ void task_CAN (void* p_params)
     {                                                  //
         CAN_sendPress(my2515);                         //       Send the current drive mode
         localVarPressure = CAN_readPressure(my2515);   //       Read the current pressure
-        if (localVarPressure > 0)                      // If the obtained pressure did not generate errors... 
+        if (localVarPressure != CAN_ERROR)             // If the obtained pressure did not generate errors... 
         {                                              //
             accumulatorPressure.put(localVarPressure); //       Push current pressure to the buffer
         }                                              //
-        vTaskDelay(1);                                 //       Delay 2 RTOS ticks
+        vTaskDelay(1);                                 //       Delay 1 RTOS ticks
     }
 }
 
@@ -313,20 +320,21 @@ void task_HALL1 (void* p_params)
     for (;;)                                                              // A forever loop...
     {                                                                     //    
         /*                                                                //
-        if (debounce(HALL1,5))
-        {
-            currentTime = millis();
-            speed = distanceTraveled / (currentTime - previousTime);
-            speed = speed*1000*3600/63360;
-            previousTime = currentTime;
-        }
+        if (debounce(HALL1,5))                                            // If a positive trigger is identified...
+        {                                                                 //
+            currentTime = millis();                                       //   Then, store current time using millis() 
+            speed = distanceTraveled / (currentTime - previousTime);      //   Compute speed based on circumfrence of circle
+            speed = speed*1000*3600/63360;                                //   Convert speed to miles per hour
+            previousTime = currentTime;                                   //   Set previousTime for next trigger
+            bikeSpeed.put((int32_t)speed);                                //   Put the speed in shared task variable
+        }                                                                 //
         */
-        bikeSpeed.put((int32_t)speed);
+        bikeSpeed.put((int32_t)speed);                                    
         speed += 1;
         if (speed > 50)
         {
             speed = 0;
         }
-        vTaskDelay(1);
+        vTaskDelay(1);                                                    // Delay 1 RTOS ticks
     }
 }

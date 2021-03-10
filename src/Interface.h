@@ -11,11 +11,12 @@
 #include <PrintStream.h>    // Include PrintStream libary
 #include <STM32FreeRTOS.h>  // Include FreeRTOS library
 // Some compiler definitions that make coding a bit easier                  
-#define DIRECT 1
-#define COAST  2 
-#define REGEN  3
-#define BOOST  4
-#define PEDAL  5
+#define DIRECT    1
+#define COAST     2
+#define REGEN     3
+#define BOOST     4
+#define PEDAL     5
+#define CAN_ERROR 9999
 
 /// Task functions
 void task_display(void* params); // The display task function
