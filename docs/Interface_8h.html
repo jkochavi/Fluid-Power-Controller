@@ -122,18 +122,24 @@ $(document).ready(function(){initNavTree('Interface_8h.html',''); initResizable(
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a20291e995fad7806c119183b4717f3f8"><td class="memItemLeft" align="right" valign="top"><a id="a20291e995fad7806c119183b4717f3f8"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>COAST</b>&#160;&#160;&#160;0</td></tr>
-<tr class="separator:a20291e995fad7806c119183b4717f3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a86720ded03b3f5b5ca53d30b33cb33bb"><td class="memItemLeft" align="right" valign="top"><a id="a86720ded03b3f5b5ca53d30b33cb33bb"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>DIRECT</b>&#160;&#160;&#160;1</td></tr>
 <tr class="separator:a86720ded03b3f5b5ca53d30b33cb33bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab97dfc84158d22d16e762f46c754176c"><td class="memItemLeft" align="right" valign="top"><a id="ab97dfc84158d22d16e762f46c754176c"></a>
-#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST</b>&#160;&#160;&#160;2</td></tr>
-<tr class="separator:ab97dfc84158d22d16e762f46c754176c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a20291e995fad7806c119183b4717f3f8"><td class="memItemLeft" align="right" valign="top"><a id="a20291e995fad7806c119183b4717f3f8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>COAST</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a20291e995fad7806c119183b4717f3f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a11b3b506179458dd29a9fbded3921e05"><td class="memItemLeft" align="right" valign="top"><a id="a11b3b506179458dd29a9fbded3921e05"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>REGEN</b>&#160;&#160;&#160;3</td></tr>
 <tr class="separator:a11b3b506179458dd29a9fbded3921e05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab97dfc84158d22d16e762f46c754176c"><td class="memItemLeft" align="right" valign="top"><a id="ab97dfc84158d22d16e762f46c754176c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BOOST</b>&#160;&#160;&#160;4</td></tr>
+<tr class="separator:ab97dfc84158d22d16e762f46c754176c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00b776b8d8a7f1e9d409d44bb9a74fe6"><td class="memItemLeft" align="right" valign="top"><a id="a00b776b8d8a7f1e9d409d44bb9a74fe6"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>PEDAL</b>&#160;&#160;&#160;5</td></tr>
+<tr class="separator:a00b776b8d8a7f1e9d409d44bb9a74fe6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf89dc0b59b9b73438c94f07495c7076"><td class="memItemLeft" align="right" valign="top"><a id="acf89dc0b59b9b73438c94f07495c7076"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>CAN_ERROR</b>&#160;&#160;&#160;9999</td></tr>
+<tr class="separator:acf89dc0b59b9b73438c94f07495c7076"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
@@ -168,7 +174,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Task which interacts with the CAN bus. </p>
-<p>This task sends the current user-chosen drive mode to the PLC, and reads the accumulator pressure, using the CAN bus. We interface with the CAN bus using an MCP2515 controller. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This task sends the current user-chosen drive mode to the PLC, and reads the accumulator pressure, using the CAN bus. We interface with the CAN bus using an MCP2515 controller. On the custom PCB, the MCP2515 controller uses an 8 MHz crystal to clock the CAN bitrate. However, the mcp2515.cpp and mcp2515.h files clock the bitrate using a 16 MHz crystal. This parameter was altered in those files to set the correct bitrate. That modification is not documented, as the files are from a different source. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p_params</td><td>A pointer to function parameters which we don't use. </td></tr>
   </table>

@@ -103,21 +103,23 @@ $(document).ready(function(){initNavTree('Interface_8h_source.html',''); initRes
 <div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="preprocessor">#include &lt;Arduino.h&gt;</span>        <span class="comment">// Include Arduino library  </span></div>
 <div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="preprocessor">#include &lt;PrintStream.h&gt;</span>    <span class="comment">// Include PrintStream libary</span></div>
 <div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="preprocessor">#include &lt;STM32FreeRTOS.h&gt;</span>  <span class="comment">// Include FreeRTOS library</span></div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// Some compiler definitions that make coding a bit easier</span></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define COAST  0                     </span></div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define DIRECT 1</span></div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define BOOST  2 </span></div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define REGEN  3</span></div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160; </div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a9e8d440b9f80517890c8ebe462ed9bfb">task_display</a>(<span class="keywordtype">void</span>* params); <span class="comment">// The display task function</span></div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a2799bc5582d595c9af523f6c05e59d03">task_CAN</a>(<span class="keywordtype">void</span>* params);     <span class="comment">// The CAN task function</span></div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a4fb62abab955d8de99b1f66afc818b93">task_HALL1</a>(<span class="keywordtype">void</span>* params);   <span class="comment">// The hall effect task function</span></div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif // UI_H</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="comment">// Some compiler definitions that make coding a bit easier                  </span></div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="preprocessor">#define DIRECT    1</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="preprocessor">#define COAST     2</span></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="preprocessor">#define REGEN     3</span></div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="preprocessor">#define BOOST     4</span></div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;<span class="preprocessor">#define PEDAL     5</span></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;<span class="preprocessor">#define CAN_ERROR 9999</span></div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a9e8d440b9f80517890c8ebe462ed9bfb">task_display</a>(<span class="keywordtype">void</span>* params); <span class="comment">// The display task function</span></div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a2799bc5582d595c9af523f6c05e59d03">task_CAN</a>(<span class="keywordtype">void</span>* params);     <span class="comment">// The CAN task function</span></div>
+<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;<span class="keywordtype">void</span> <a class="code" href="Interface_8h.html#a4fb62abab955d8de99b1f66afc818b93">task_HALL1</a>(<span class="keywordtype">void</span>* params);   <span class="comment">// The hall effect task function</span></div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;<span class="preprocessor">#endif // UI_H</span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
-<div class="ttc" id="aInterface_8h_html_a9e8d440b9f80517890c8ebe462ed9bfb"><div class="ttname"><a href="Interface_8h.html#a9e8d440b9f80517890c8ebe462ed9bfb">task_display</a></div><div class="ttdeci">void task_display(void *params)</div><div class="ttdoc">Task functions.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:241</div></div>
-<div class="ttc" id="aInterface_8h_html_a2799bc5582d595c9af523f6c05e59d03"><div class="ttname"><a href="Interface_8h.html#a2799bc5582d595c9af523f6c05e59d03">task_CAN</a></div><div class="ttdeci">void task_CAN(void *params)</div><div class="ttdoc">Task which interacts with the CAN bus.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:274</div></div>
-<div class="ttc" id="aInterface_8h_html_a4fb62abab955d8de99b1f66afc818b93"><div class="ttname"><a href="Interface_8h.html#a4fb62abab955d8de99b1f66afc818b93">task_HALL1</a></div><div class="ttdeci">void task_HALL1(void *params)</div><div class="ttdoc">Task which reads a hall effect sensor.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:303</div></div>
+<div class="ttc" id="aInterface_8h_html_a9e8d440b9f80517890c8ebe462ed9bfb"><div class="ttname"><a href="Interface_8h.html#a9e8d440b9f80517890c8ebe462ed9bfb">task_display</a></div><div class="ttdeci">void task_display(void *params)</div><div class="ttdoc">Task functions.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:243</div></div>
+<div class="ttc" id="aInterface_8h_html_a2799bc5582d595c9af523f6c05e59d03"><div class="ttname"><a href="Interface_8h.html#a2799bc5582d595c9af523f6c05e59d03">task_CAN</a></div><div class="ttdeci">void task_CAN(void *params)</div><div class="ttdoc">Task which interacts with the CAN bus.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:282</div></div>
+<div class="ttc" id="aInterface_8h_html_a4fb62abab955d8de99b1f66afc818b93"><div class="ttname"><a href="Interface_8h.html#a4fb62abab955d8de99b1f66afc818b93">task_HALL1</a></div><div class="ttdeci">void task_HALL1(void *params)</div><div class="ttdoc">Task which reads a hall effect sensor.</div><div class="ttdef"><b>Definition:</b> Interface.cpp:311</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>

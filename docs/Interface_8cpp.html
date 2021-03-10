@@ -436,7 +436,7 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Task which interacts with the CAN bus. </p>
-<p>This task sends the current user-chosen drive mode to the PLC, and reads the accumulator pressure, using the CAN bus. We interface with the CAN bus using an MCP2515 controller. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This task sends the current user-chosen drive mode to the PLC, and reads the accumulator pressure, using the CAN bus. We interface with the CAN bus using an MCP2515 controller. On the custom PCB, the MCP2515 controller uses an 8 MHz crystal to clock the CAN bitrate. However, the mcp2515.cpp and mcp2515.h files clock the bitrate using a 16 MHz crystal. This parameter was altered in those files to set the correct bitrate. That modification is not documented, as the files are from a different source. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p_params</td><td>A pointer to function parameters which we don't use. </td></tr>
   </table>
