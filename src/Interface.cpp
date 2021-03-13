@@ -203,33 +203,32 @@ void updateDriveMode(EasyNex &display)
     /// This variable stores the value of va1, a global variable on
     /// the Nextion. va1 is only 0 if the Nextion is actively displaying
     /// the home page. 
-    uint32_t checkPage = display.readNumber("va1.val");             // Read the value of va1.
-    if (buttonState != previousButtonState_DSP && checkPage == 0)   // If we are on the home page and a button was pressed...
+    if (buttonState != previousButtonState_DSP)   // If we are on the home page and a button was pressed...
     {                                                               //
         if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
-            display.writeStr("t0.txt","Direct");                    //          Then, update the text accordingly.
-            display.writeNum("va0.val",1);                          //          Update Nextion's corresponding counter variable.
+            display.writeStr("page0.t9.txt","Direct");                    //          Then, update the text accordingly.
+            display.writeNum("page0.va0.val",1);                          //          Update Nextion's corresponding counter variable.
         }                                                           //
         else if (buttonState == COAST)                              //      Else if we're in coast mode...
         {                                                           //          
-            display.writeStr("t0.txt","Coast");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",2);                          //          Update Nextion's corresponding counter variable.
+            display.writeStr("page0.t9.txt","Coast");                     //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",2);                          //          Update Nextion's corresponding counter variable.
         }                                                           // 
         else if (buttonState == REGEN)                              //      Else if we're in regen mode...
         {                                                           //      
-            display.writeStr("t0.txt","Regen");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",3);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Regen");                     //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",3);                          //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == BOOST)                              //      Else if we're in boost mode...
         {                                                           //      
-            display.writeStr("t0.txt","Boost");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",4);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Boost");                     //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",4);                          //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == PEDAL)                              //      Else if we're in pedal charge mode...
         {                                                           //      
-            display.writeStr("t0.txt","Pedel");                     //          Then, update the text accordingly
-            display.writeNum("va0.val",5);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Pedel");                     //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",5);                          //          Update Nextion's corresponding counter variable
         }                                                           //
         previousButtonState_DSP = buttonState;                      // Reset to prevent continuous transmitting
     }
@@ -261,8 +260,8 @@ void task_display (void* p_params)
         updateDriveMode(myNextion);                                          //     Update the drive mode text
         accumulatorPressure.get(localVar_accumulatorPressure);               //     Pull accumulator pressure from buffer
         bikeSpeed.get(localVar_bikeSpeed);                                   //     Pull speed from buffer
-        myNextion.writeNum("n0.val",localVar_bikeSpeed);                     //     Write the speed to the display
-        myNextion.writeNum("n1.val",localVar_accumulatorPressure);           //     Write the pressure to the display
+        myNextion.writeNum("n1.val",localVar_bikeSpeed);                     //     Write the speed to the display
+        myNextion.writeNum("n2.val",localVar_accumulatorPressure);           //     Write the pressure to the display
         vTaskDelay(1);                                                       //     Delay 1 RTOS tick (15ms)
     }
 }
