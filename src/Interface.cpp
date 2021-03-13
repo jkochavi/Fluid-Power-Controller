@@ -207,30 +207,34 @@ void updateDriveMode(EasyNex &display)
     {                                                               //
         if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
-            display.writeStr("page0.t9.txt","Direct");                    //          Then, update the text accordingly.
-            display.writeNum("page0.va0.val",1);                          //          Update Nextion's corresponding counter variable.
+            display.writeStr("page0.t9.txt","Direct");              //          Then, update the text accordingly.
+            display.writeNum("page0.va0.val",1);                    //          Update Nextion's corresponding counter variable.
         }                                                           //
         else if (buttonState == COAST)                              //      Else if we're in coast mode...
         {                                                           //          
-            display.writeStr("page0.t9.txt","Coast");                     //          Then, update the text accordingly
-            display.writeNum("page0.va0.val",2);                          //          Update Nextion's corresponding counter variable.
+            display.writeStr("page0.t9.txt","Coast");               //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",2);                    //          Update Nextion's corresponding counter variable.
         }                                                           // 
         else if (buttonState == REGEN)                              //      Else if we're in regen mode...
         {                                                           //      
-            display.writeStr("page0.t9.txt","Regen");                     //          Then, update the text accordingly
-            display.writeNum("page0.va0.val",3);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Regen");               //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",3);                    //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == BOOST)                              //      Else if we're in boost mode...
         {                                                           //      
-            display.writeStr("page0.t9.txt","Boost");                     //          Then, update the text accordingly
-            display.writeNum("page0.va0.val",4);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Boost");               //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",4);                    //          Update Nextion's corresponding counter variable
         }                                                           // 
         else if (buttonState == PEDAL)                              //      Else if we're in pedal charge mode...
         {                                                           //      
-            display.writeStr("page0.t9.txt","Pedel");                     //          Then, update the text accordingly
-            display.writeNum("page0.va0.val",5);                          //          Update Nextion's corresponding counter variable
+            display.writeStr("page0.t9.txt","Pedel");               //          Then, update the text accordingly
+            display.writeNum("page0.va0.val",5);                    //          Update Nextion's corresponding counter variable
         }                                                           //
         previousButtonState_DSP = buttonState;                      // Reset to prevent continuous transmitting
+        if (display.readNumber("page2.va0.val")==1)                 // If we're on the drive mode select page...
+        {                                                           //
+            display.writeStr("page 2");                             //      Then refresh the page completely
+        } 
     }
 }
 
