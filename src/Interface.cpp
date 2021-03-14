@@ -203,7 +203,8 @@ void updateDriveMode(EasyNex &display)
     /// This variable stores the value of va1, a global variable on
     /// the Nextion. va1 is only 0 if the Nextion is actively displaying
     /// the home page. 
-    if (buttonState != previousButtonState_DSP)   // If we are on the home page and a button was pressed...
+    uint32_t checkTouchPress = display.readNumber("page2.va1.val");
+    if (buttonState != previousButtonState_DSP && !checkTouchPress)   // If we are on the home page and a button was pressed...
     {                                                               //
         if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
@@ -235,6 +236,11 @@ void updateDriveMode(EasyNex &display)
         {                                                           //
             display.writeStr("page 2");                             //      Then refresh the page completely
         } 
+    }
+    else if (checkTouchPress)
+    {
+        buttonState = display.readNumber("page2.va1.val");
+        previousButtonState_DSP = buttonState;
     }
 }
 
