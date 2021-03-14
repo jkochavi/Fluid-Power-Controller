@@ -31,7 +31,7 @@
 
 /// This variable keeps track of which drive mode the vehicle is in. 
 /// This value is when a button is pressed. 
-uint8_t buttonState = 0;                                    // 0->Coast, 1->Direct, 2->Boost, 3->Regen
+uint8_t buttonState = 1;                                    // 1->Direct 2->Coast 3->Regen 4->Boost 5->Pedal
 /// This variable is changed by the display task, and keeps
 /// track of when the drive mode text on the Nextion display 
 /// needs to be updated.
@@ -204,7 +204,7 @@ void updateDriveMode(EasyNex &display)
     /// the Nextion. va1 is only 0 if the Nextion is actively displaying
     /// the home page. 
     uint32_t checkTouchPress = display.readNumber("page2.va1.val");
-    if (buttonState != previousButtonState_DSP && !checkTouchPress)   // If we are on the home page and a button was pressed...
+    if (buttonState != previousButtonState_DSP)   // If we are on the home page and a button was pressed...
     {                                                               //
         if (buttonState == DIRECT)                                  //      If we're in direct mode...
         {                                                           //
@@ -240,6 +240,7 @@ void updateDriveMode(EasyNex &display)
     else if (checkTouchPress)
     {
         buttonState = display.readNumber("page2.va1.val");
+        display.writeNum("page2.va1.val",0);
         previousButtonState_DSP = buttonState;
     }
 }
@@ -251,7 +252,7 @@ void updateDriveMode(EasyNex &display)
  */
 void task_display (void* p_params)
 {
-    (void)p_params;                                                          // Does nothing but shut up a compiler warning
+    (void)p_params;                                                          // Does nothing but shut up a compiler warning    
     HardwareSerial NEXSerial(PA3, PA2);                                      // Create serial port at desired GPIO pins
     NEXSerial.begin(9600);                                                   // Init the serial port at 9600 baud
     EasyNex myNextion(NEXSerial);                                            // Create a Nextion object
@@ -267,11 +268,12 @@ void task_display (void* p_params)
     attachInterrupt(digitalPinToInterrupt(regenButton),ISRregen,RISING);     // Attach pin to ISR
     for (;;)                                                                 // A forever loop...
     {                                                                        //
+        //myNextion.NextionListen();
         updateDriveMode(myNextion);                                          //     Update the drive mode text
-        accumulatorPressure.get(localVar_accumulatorPressure);               //     Pull accumulator pressure from buffer
+        //accumulatorPressure.get(localVar_accumulatorPressure);               //     Pull accumulator pressure from buffer
         bikeSpeed.get(localVar_bikeSpeed);                                   //     Pull speed from buffer
         myNextion.writeNum("n1.val",localVar_bikeSpeed);                     //     Write the speed to the display
-        myNextion.writeNum("n2.val",localVar_accumulatorPressure);           //     Write the pressure to the display
+        //myNextion.writeNum("page0.n0.val",localVar_accumulatorPressure);           //     Write the pressure to the display
         vTaskDelay(1);                                                       //     Delay 1 RTOS tick (15ms)
     }
 }
