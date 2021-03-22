@@ -49,6 +49,10 @@ Queue <int32_t> accumulatorPressure(10,"buffer");
 /// in a buffer makes up for any mismatch in transmission 
 /// frequencies between the display and hall effect tasks.
 Queue <int32_t> bikeSpeed(100,"buffer");
+/// Share that stores status of CAN connection.
+/// A value of TRUE means that a CAN connection is established,
+/// and a value of FALSE means that an error has occured.
+Share <bool> CANconnected;
 
 /** @brief   Function to debounce a signal from a GPIO pin.
  *  @details This function reads the value from a GPIO pin for a 
@@ -268,11 +272,10 @@ void task_display (void* p_params)
     attachInterrupt(digitalPinToInterrupt(regenButton),ISRregen,RISING);     // Attach pin to ISR
     for (;;)                                                                 // A forever loop...
     {                                                                        //
-        //myNextion.NextionListen();
         updateDriveMode(myNextion);                                          //     Update the drive mode text
         //accumulatorPressure.get(localVar_accumulatorPressure);               //     Pull accumulator pressure from buffer
         bikeSpeed.get(localVar_bikeSpeed);                                   //     Pull speed from buffer
-        myNextion.writeNum("n1.val",localVar_bikeSpeed);                     //     Write the speed to the display
+        myNextion.writeNum("page0.n1.val",localVar_bikeSpeed);                     //     Write the speed to the display
         //myNextion.writeNum("page0.n0.val",localVar_accumulatorPressure);           //     Write the pressure to the display
         vTaskDelay(1);                                                       //     Delay 1 RTOS tick (15ms)
     }
