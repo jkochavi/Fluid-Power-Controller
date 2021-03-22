@@ -270,14 +270,19 @@ void task_display (void* p_params)
     attachInterrupt(digitalPinToInterrupt(directButton),ISRdirect,RISING);   // Attach pin to ISR
     attachInterrupt(digitalPinToInterrupt(boostButton),ISRboost,RISING);     // Attach pin to ISR
     attachInterrupt(digitalPinToInterrupt(regenButton),ISRregen,RISING);     // Attach pin to ISR
+    bool CANstatus;                                                          // Define local variable for CAN status
     for (;;)                                                                 // A forever loop...
     {                                                                        //
-        updateDriveMode(myNextion);                                          //     Update the drive mode text
-        //accumulatorPressure.get(localVar_accumulatorPressure);               //     Pull accumulator pressure from buffer
-        bikeSpeed.get(localVar_bikeSpeed);                                   //     Pull speed from buffer
-        myNextion.writeNum("page0.n1.val",localVar_bikeSpeed);                     //     Write the speed to the display
-        //myNextion.writeNum("page0.n0.val",localVar_accumulatorPressure);           //     Write the pressure to the display
-        vTaskDelay(1);                                                       //     Delay 1 RTOS tick (15ms)
+        CANconnected.get(CANstatus);                                         // Get latest CAN status
+        updateDriveMode(myNextion);                                          // Update the drive mode text
+        if (CANstatus)                                                       // If CAN is connected...
+        {                                                                    //
+            accumulatorPressure.get(localVar_accumulatorPressure);           //     Pull accumulator pressure from buffer
+            myNextion.writeNum("page0.n0.val",localVar_accumulatorPressure); //     Write the pressure to the display
+        }                                                                    // 
+        bikeSpeed.get(localVar_bikeSpeed);                                   // Pull speed from buffer
+        myNextion.writeNum("page0.n1.val",localVar_bikeSpeed);               // Write the speed to the display
+        vTaskDelay(1);                                                       // Delay 1 RTOS tick (15ms)
     }
 }
 
@@ -308,6 +313,11 @@ void task_CAN (void* p_params)
         if (localVarPressure != CAN_ERROR)             // If the obtained pressure did not generate errors... 
         {                                              //
             accumulatorPressure.put(localVarPressure); //       Push current pressure to the buffer
+            CANconnected.put(true);                    //       Alert CAN status as connected
+        }                                              //
+        else                                           // Otherwise... 
+        {                                              //
+            CANconnected.put(false);                   //       Alert CAN status as not connected
         }                                              //
         vTaskDelay(1);                                 //       Delay 1 RTOS ticks
     }
