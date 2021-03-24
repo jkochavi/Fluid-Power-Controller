@@ -35,6 +35,8 @@ var NAVTREE =
     [ "HF Impulse", "page2.html", null ],
     [ "Nextion Editor", "page3.html", null ],
     [ "Controller Area Network (CAN)", "page4.html", null ],
+    [ "Printed Circuit Board Schematic", "page5.html", null ],
+    [ "Additional Support Files", "page6.html", null ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [
