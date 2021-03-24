@@ -23,6 +23,7 @@ void setup()
     Serial.begin(115200);                         // Begin Serial @ 115200 baud
     delay(500);                                   // Pause 0.5 seconds
     Serial.println("Starting program...");        // Print for debugging
+    
     xTaskCreate (task_display,                    // Create task for user interface
                  "Nextion communication",         // Name for printouts
                  256,                             // Stack size
@@ -31,13 +32,13 @@ void setup()
                  NULL);                           // Task handle
     xTaskCreate (task_CAN,                        // Create task for user interface
                  "CAN communication",             // Name for printouts
-                 256,                             // Stack size
+                 512,                             // Stack size
                  NULL,                            // Parameters for task fn.
                  2,                               // Priority
                  NULL);                           // Task handle
     xTaskCreate (task_HALL1,                      // Create task for user interface
                  "Bike Speed",                    // Name for printouts
-                 256,                             // Stack size
+                 128,                             // Stack size
                  NULL,                            // Parameters for task fn.
                  1,                               // Priority
                  NULL);                           // Task handle

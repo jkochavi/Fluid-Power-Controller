@@ -54,13 +54,13 @@ uint8_t previousButtonState_CAN = 255;                      // Init to force CAN
  *           in transmission frequencies between the PLC and this
  *           controller. 
  */
-Queue <int32_t> accumulatorPressure(10,"buffer");
+Queue <int32_t> accumulatorPressure(20,"pressure buffer");
 /** @brief   Queue for storing bike speed values. 
  *  @details Storing these values in a buffer makes up for any 
  *           mismatch in transmission frequencies between the 
  *           display and hall effect tasks.
  */
-Queue <int32_t> bikeSpeed(5,"buffer");
+Queue <int32_t> bikeSpeed(20,"speed buffer");
 /** @brief   Share that stores status of CAN connection.
  *  @details A value of TRUE means that a CAN connection is established,
  *           and a value of FALSE means that an error has occured.
@@ -339,11 +339,12 @@ void task_display (void* p_params)
             myNextion.writeStr("page0.t7.txt","Not Connected");              //     Modify screen text to show not connected
         }                                                                    // 
         bikeSpeed.get(localVar_bikeSpeed);                                   // Pull speed from buffer
+        Serial.println(localVar_bikeSpeed);
         myNextion.writeNum("page0.n1.val",localVar_bikeSpeed);               // Write the speed to the display
         // This type of delay waits until the given number of RTOS ticks have
         // elapsed since the task previously began running. This prevents 
         // inaccuracy due to not accounting for how long the task took to run
-        vTaskDelayUntil (&xLastWakeTime, 1);
+        vTaskDelayUntil (&xLastWakeTime, 100);
     }
 }
 
@@ -384,9 +385,9 @@ void task_CAN (void* p_params)
         if (localVarPressure != CAN_ERROR)             // If the obtained pressure did not generate errors... 
         {                                              //
             if (localVarPressure != CAN_OTHER)         //       If the appropriate message was received...
-            {
+            {                                          //
                 accumulatorPressure.put(localVarPressure); //   Push current pressure to the buffer
-            }
+            }                                          //
             CANconnected.put(true);                    //       Alert CAN status as connected
         }                                              //
         else                                           // Otherwise... 
@@ -396,7 +397,7 @@ void task_CAN (void* p_params)
         // This type of delay waits until the given number of RTOS ticks have
         // elapsed since the task previously began running. This prevents 
         // inaccuracy due to not accounting for how long the task took to run
-        vTaskDelayUntil (&xLastWakeTime, 1);
+        vTaskDelayUntil (&xLastWakeTime, 30);
     }
 }
 
@@ -438,8 +439,8 @@ void task_HALL1 (void* p_params)
     for (;;)                                                              // A forever loop...
     {                                                                     //    
                                                                           //
-        currentTime = micros();   
-        bikeSpeed.put(currentTime-previousTime);
+        currentTime = millis();   
+        bikeSpeed.put(currentTime - previousTime);
         previousTime = currentTime;
         /*
         if ((currentTime - previousTime) > timeOut)
@@ -456,18 +457,18 @@ void task_HALL1 (void* p_params)
             //bikeSpeed.put((int32_t)speed);                                //   Put the speed in shared task variable
         }                                                                 //
         
-        /*
-        bikeSpeed.put((int32_t)speed);                                    
+                                    
         speed += 1;
         if (speed > 50)
         {
             speed = 0;
         }
         */
+
         // This type of delay waits until the given number of RTOS ticks have
         // elapsed since the task previously began running. This prevents 
         // inaccuracy due to not accounting for how long the task took to run
-        vTaskDelayUntil (&xLastWakeTime, 1);
+        vTaskDelayUntil (&xLastWakeTime, 20);
         
     }
 }
