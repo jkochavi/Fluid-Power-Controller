@@ -27,7 +27,7 @@ void setup()
                  "Nextion communication",         // Name for printouts
                  256,                             // Stack size
                  NULL,                            // Parameters for task fn.
-                 1,                               // Priority
+                 3,                               // Priority
                  NULL);                           // Task handle
     xTaskCreate (task_CAN,                        // Create task for user interface
                  "CAN communication",             // Name for printouts
@@ -39,7 +39,7 @@ void setup()
                  "Bike Speed",                    // Name for printouts
                  256,                             // Stack size
                  NULL,                            // Parameters for task fn.
-                 3,                               // Priority
+                 1,                               // Priority
                  NULL);                           // Task handle
     vTaskStartScheduler ();                       // Begin task scheduler
 }

@@ -7,10 +7,10 @@ var Interface_8cpp =
     [ "HALL1", "Interface_8cpp.html#abe94cf4e3630fe1c4a543d69b0cd01a6", null ],
     [ "regenButton", "Interface_8cpp.html#a19f61c5c02d0fdae4e4085521c810c37", null ],
     [ "accumulatorPressure", "Interface_8cpp.html#a8d140b5e57fe37be73abb1c25e24700e", null ],
-    [ "bikeSpeed", "Interface_8cpp.html#a6e34bc0efb904bd9dd43d2062460a9a9", null ],
+    [ "bikeSpeed", "Interface_8cpp.html#ae717e189143a2357f98f49b468e10da4", null ],
     [ "CAN_readPressure", "Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae", null ],
     [ "CAN_sendPress", "Interface_8cpp.html#aa8686a378ae63586440852b7a15bf41e", null ],
-    [ "debounce", "Interface_8cpp.html#a0b3400b0dc55a693d0dd9f6ff3105a02", null ],
+    [ "debounce", "Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7", null ],
     [ "ISRboost", "Interface_8cpp.html#ac46403aac21bdccea79e1beecd864128", null ],
     [ "ISRcoast", "Interface_8cpp.html#a66e4b01ae4853571688d2e30c1db7265", null ],
     [ "ISRdirect", "Interface_8cpp.html#a76d676688a39ec76b704f66d37964e09", null ],
@@ -20,6 +20,7 @@ var Interface_8cpp =
     [ "task_HALL1", "Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360", null ],
     [ "updateDriveMode", "Interface_8cpp.html#a758e3e40f550649d6594bb1c53073dcc", null ],
     [ "buttonState", "Interface_8cpp.html#a39a067cd169642a9dc6f35d61e74a949", null ],
+    [ "CANconnected", "Interface_8cpp.html#a6f55d9204fc41e23568a392aab638239", null ],
     [ "previousButtonState_CAN", "Interface_8cpp.html#a46709bdab87c13ff4c0a5a41e69b2cca", null ],
     [ "previousButtonState_DSP", "Interface_8cpp.html#ab85e421ccb26cae296438098ad2a743b", null ]
 ];

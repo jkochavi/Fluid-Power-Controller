@@ -2,6 +2,7 @@ var Interface_8h =
 [
     [ "BOOST", "Interface_8h.html#ab97dfc84158d22d16e762f46c754176c", null ],
     [ "CAN_ERROR", "Interface_8h.html#acf89dc0b59b9b73438c94f07495c7076", null ],
+    [ "CAN_OTHER", "Interface_8h.html#a893d3a3d7fa66dfbcd339edf68853f10", null ],
     [ "COAST", "Interface_8h.html#a20291e995fad7806c119183b4717f3f8", null ],
     [ "DIRECT", "Interface_8h.html#a86720ded03b3f5b5ca53d30b33cb33bb", null ],
     [ "PEDAL", "Interface_8h.html#a00b776b8d8a7f1e9d409d44bb9a74fe6", null ],
