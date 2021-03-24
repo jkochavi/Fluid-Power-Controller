@@ -1,14 +1,23 @@
 /** @file Interface.cpp
- *    This file contains the function files for the RTOS
- *    tasks used with the interface controller. It manages
- *    three tasks: display, CAN, and hall effect. In the 
- *    display task, the controller interfaces with a 
- *    Nextion display using the EasyNextionLibrary header
- *    file. The controller communicates with the Nextion
- *    using UART. In the CAN task, the controller interfaces
- *    with an MCP2515 CAN controller using SPI, which outputs
- *    a CAN signal to the CAN bus. In the hall effect task,
- *    the controller reads a GPIO pin using a polling method.
+ * This file contains the function files for the RTOS
+ * tasks used with the interface controller. It manages
+ * three tasks: display, CAN, and hall effect. In the 
+ * display task, the controller interfaces with a 
+ * Nextion display using the EasyNextionLibrary header
+ * file. The controller communicates with the Nextion
+ * using UART. In the CAN task, the controller interfaces
+ * with an MCP2515 CAN controller using SPI, which outputs
+ * a CAN signal to the CAN bus. In the hall effect task,
+ * the controller reads a GPIO pin using a polling method.
+ * 
+ * As discussed in the section, \ref s_software, the task
+ * with the highest priority is task_HALL1(), which must
+ * quickly poll the hall effect sensor to measure the 
+ * speed of the vehicle. A high-level task diagram is
+ * shown in Figure 1.
+ * 
+ * <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig19.png" style="width:400px;">
+ * <br /><b>Figure 1.</b> Inter-controller system boundary diagram.
  *
  *  @author  Jordan Kochavi
  * 

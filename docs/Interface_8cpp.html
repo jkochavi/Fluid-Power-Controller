@@ -138,12 +138,12 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a8d140b5e57fe37be73abb1c25e24700e"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a8d140b5e57fe37be73abb1c25e24700e">accumulatorPressure</a> (10,&quot;buffer&quot;)</td></tr>
-<tr class="memdesc:a8d140b5e57fe37be73abb1c25e24700e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing accumulator pressure values.  <a href="Interface_8cpp.html#a8d140b5e57fe37be73abb1c25e24700e">More...</a><br /></td></tr>
-<tr class="separator:a8d140b5e57fe37be73abb1c25e24700e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae717e189143a2357f98f49b468e10da4"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#ae717e189143a2357f98f49b468e10da4">bikeSpeed</a> (5,&quot;buffer&quot;)</td></tr>
-<tr class="memdesc:ae717e189143a2357f98f49b468e10da4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing bike speed values.  <a href="Interface_8cpp.html#ae717e189143a2357f98f49b468e10da4">More...</a><br /></td></tr>
-<tr class="separator:ae717e189143a2357f98f49b468e10da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#af6d88e4ec98f0c1bb01ff4a9d9e931b7">accumulatorPressure</a> (20,&quot;pressure buffer&quot;)</td></tr>
+<tr class="memdesc:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing accumulator pressure values.  <a href="Interface_8cpp.html#af6d88e4ec98f0c1bb01ff4a9d9e931b7">More...</a><br /></td></tr>
+<tr class="separator:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecef6508714e56cdbebb2a8f4613e2b3"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3">bikeSpeed</a> (20,&quot;speed buffer&quot;)</td></tr>
+<tr class="memdesc:aecef6508714e56cdbebb2a8f4613e2b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing bike speed values.  <a href="Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3">More...</a><br /></td></tr>
+<tr class="separator:aecef6508714e56cdbebb2a8f4613e2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af090274e5f1ebfc12cc507560a557ce7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7">debounce</a> (uint8_t buttonPin, uint8_t length, bool sign=true)</td></tr>
 <tr class="memdesc:af090274e5f1ebfc12cc507560a557ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to debounce a signal from a GPIO pin.  <a href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7">More...</a><br /></td></tr>
 <tr class="separator:af090274e5f1ebfc12cc507560a557ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -198,11 +198,14 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>This file contains the function files for the RTOS tasks used with the interface controller. It manages three tasks: display, CAN, and hall effect. In the display task, the controller interfaces with a Nextion display using the EasyNextionLibrary header file. The controller communicates with the Nextion using UART. In the CAN task, the controller interfaces with an MCP2515 CAN controller using SPI, which outputs a CAN signal to the CAN bus. In the hall effect task, the controller reads a GPIO pin using a polling method.</p>
+<p>As discussed in the section, <a class="el" href="index.html#s_software">Software Design</a>, the task with the highest priority is <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>, which must quickly poll the hall effect sensor to measure the speed of the vehicle. A high-level task diagram is shown in Figure 1.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig19.png" alt="" style="width:400px;" class="inline"/> <br  />
+<b>Figure 1.</b> Inter-controller system boundary diagram.</p>
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi</dd></dl>
 <dl class="section date"><dt>Date</dt><dd>8 Dec 2020 Original file </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a8d140b5e57fe37be73abb1c25e24700e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8d140b5e57fe37be73abb1c25e24700e">&#9670;&nbsp;</a></span>accumulatorPressure()</h2>
+<a id="af6d88e4ec98f0c1bb01ff4a9d9e931b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6d88e4ec98f0c1bb01ff4a9d9e931b7">&#9670;&nbsp;</a></span>accumulatorPressure()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -210,13 +213,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
         <tr>
           <td class="memname">Queue&lt;int32_t&gt; accumulatorPressure </td>
           <td>(</td>
-          <td class="paramtype">10&#160;</td>
+          <td class="paramtype">20&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&quot;buffer&quot;&#160;</td>
+          <td class="paramtype">&quot;pressure buffer&quot;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
@@ -232,8 +235,8 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 
 </div>
 </div>
-<a id="ae717e189143a2357f98f49b468e10da4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae717e189143a2357f98f49b468e10da4">&#9670;&nbsp;</a></span>bikeSpeed()</h2>
+<a id="aecef6508714e56cdbebb2a8f4613e2b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecef6508714e56cdbebb2a8f4613e2b3">&#9670;&nbsp;</a></span>bikeSpeed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -241,13 +244,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
         <tr>
           <td class="memname">Queue&lt;int32_t&gt; bikeSpeed </td>
           <td>(</td>
-          <td class="paramtype">5&#160;</td>
+          <td class="paramtype">20&#160;</td>
           <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">&quot;buffer&quot;&#160;</td>
+          <td class="paramtype">&quot;speed buffer&quot;&#160;</td>
           <td class="paramname">&#160;</td>
         </tr>
         <tr>
