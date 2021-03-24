@@ -31,6 +31,7 @@ var NAVTREE =
     [ "Software Design", "index.html#s_software", null ],
     [ "Enclosure Design", "index.html#s_enclosures", null ],
     [ "Results and Improvements", "index.html#s_results", null ],
+    [ "Total Costs", "index.html#s_cost", null ],
     [ "HF Impulse", "page2.html", null ],
     [ "Nextion Editor", "page3.html", null ],
     [ "Controller Area Network (CAN)", "page4.html", null ],
