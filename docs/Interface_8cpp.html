@@ -105,7 +105,7 @@ $(document).ready(function(){initNavTree('Interface_8cpp.html',''); initResizabl
 <code>#include &quot;taskshare.h&quot;</code><br />
 <code>#include &quot;taskqueue.h&quot;</code><br />
 <code>#include &quot;EasyNextionLibrary.h&quot;</code><br />
-<code>#include &lt;STM32FreeRTOS.h&gt;</code><br />
+<code>#include &quot;STM32FreeRTOS.h&quot;</code><br />
 <code>#include &quot;SPI.h&quot;</code><br />
 <code>#include &quot;mcp2515.h&quot;</code><br />
 </div><table class="memberdecls">
@@ -208,7 +208,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fsm.png" alt="" style="width:400px;" class="inline"/> <br  />
 <b>Figure 2.</b> FSM diagram for <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>.</p>
 <p>In State 1, the task continuously waits for a hall effect trigger. Since the sensor is active-low, the task uses the function <a class="el" href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7" title="Function to debounce a signal from a GPIO pin.">debounce()</a> to identify when the signal transitions from high to low. When this change is identified, the task calculates the speed of the vehicle and stores it in two inter-task variables: bikeSpeed and floatSpeed. See variable descriptions for more information. After the speed is calculated, the task transitions to State 2 to wait until the signal transitions back to high. When the signal returns from low to high, the task transitions back to State 1 to wait for the next pulse.</p>
-<dl class="section author"><dt>Author</dt><dd>Jordan Kochavi</dd></dl>
+<dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>8 Dec 2020 Original file </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
 <a id="ae7b4ba8037c51907ef76cdd1c2854fae"></a>
@@ -457,7 +457,7 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 </div><div class="memdoc">
 
 <p>Task which reads a hall effect sensor. </p>
-<p>This task polls the GPIO pin for the hall effect sensor. Whenever the signal reads high, the task retains the elapsed time, in milliseconds, between pulses. We use the circumference of the wheel to calculate the distance traveled between pulses, and then divide by the time between pulses to calculate speed, which is subsequently converted to RPM. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This task polls the GPIO pin for the hall effect sensor. Whenever the triggers low, the task retains the elapsed time, in milliseconds, between pulses. We use the circumference of the wheel to calculate the distance traveled between pulses, and then divide by the time between pulses to calculate speed, which is subsequently converted to miles per hour. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p_params</td><td>A pointer to function parameters which we don't use. </td></tr>
   </table>

@@ -100,9 +100,9 @@ $(document).ready(function(){initNavTree('Interface_8h.html',''); initResizable(
 <div class="title">Interface.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><code>#include &lt;Arduino.h&gt;</code><br />
-<code>#include &lt;PrintStream.h&gt;</code><br />
-<code>#include &lt;STM32FreeRTOS.h&gt;</code><br />
+<div class="textblock"><code>#include &quot;Arduino.h&quot;</code><br />
+<code>#include &quot;PrintStream.h&quot;</code><br />
+<code>#include &quot;STM32FreeRTOS.h&quot;</code><br />
 </div>
 <p><a href="Interface_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
@@ -149,7 +149,7 @@ Functions</h2></td></tr>
 <tr class="separator:a4fb62abab955d8de99b1f66afc818b93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is the header file for the inteface task functions. </p><dl class="section author"><dt>Author</dt><dd>Jordan Kochavi</dd></dl>
+<div class="textblock"><p>This is the header file for the inteface task functions. </p><dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>8 Dec 2020 Original file </dd></dl>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
 <a id="acf89dc0b59b9b73438c94f07495c7076"></a>
@@ -256,7 +256,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Task which reads a hall effect sensor. </p>
-<p>This task polls the GPIO pin for the hall effect sensor. Whenever the signal reads high, the task retains the elapsed time, in milliseconds, between pulses. We use the circumference of the wheel to calculate the distance traveled between pulses, and then divide by the time between pulses to calculate speed, which is subsequently converted to RPM. </p><dl class="params"><dt>Parameters</dt><dd>
+<p>This task polls the GPIO pin for the hall effect sensor. Whenever the triggers low, the task retains the elapsed time, in milliseconds, between pulses. We use the circumference of the wheel to calculate the distance traveled between pulses, and then divide by the time between pulses to calculate speed, which is subsequently converted to miles per hour. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">p_params</td><td>A pointer to function parameters which we don't use. </td></tr>
   </table>
