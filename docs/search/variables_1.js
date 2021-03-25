@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['canconnected_59',['CANconnected',['../Interface_8cpp.html#a6f55d9204fc41e23568a392aab638239',1,'Interface.cpp']]]
+  ['bikespeed_58',['bikeSpeed',['../Interface_8cpp.html#a51293a47184005045b60439ff7c77a22',1,'Interface.cpp']]],
+  ['buttonstate_59',['buttonState',['../Interface_8cpp.html#a39a067cd169642a9dc6f35d61e74a949',1,'Interface.cpp']]]
 ];

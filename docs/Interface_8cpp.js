@@ -6,8 +6,6 @@ var Interface_8cpp =
     [ "directButton", "Interface_8cpp.html#a8a64b24d507d8ddff6aa9fb1e2a4879d", null ],
     [ "HALL1", "Interface_8cpp.html#abe94cf4e3630fe1c4a543d69b0cd01a6", null ],
     [ "regenButton", "Interface_8cpp.html#a19f61c5c02d0fdae4e4085521c810c37", null ],
-    [ "accumulatorPressure", "Interface_8cpp.html#af6d88e4ec98f0c1bb01ff4a9d9e931b7", null ],
-    [ "bikeSpeed", "Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3", null ],
     [ "CAN_readPressure", "Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae", null ],
     [ "CAN_sendPress", "Interface_8cpp.html#aa8686a378ae63586440852b7a15bf41e", null ],
     [ "debounce", "Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7", null ],
@@ -19,8 +17,11 @@ var Interface_8cpp =
     [ "task_display", "Interface_8cpp.html#ab33e4972e861b45fe133b914aaec9677", null ],
     [ "task_HALL1", "Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360", null ],
     [ "updateDriveMode", "Interface_8cpp.html#a758e3e40f550649d6594bb1c53073dcc", null ],
+    [ "accumulatorPressure", "Interface_8cpp.html#a7a7e37eb41ab30ce2710027597139689", null ],
+    [ "bikeSpeed", "Interface_8cpp.html#a51293a47184005045b60439ff7c77a22", null ],
     [ "buttonState", "Interface_8cpp.html#a39a067cd169642a9dc6f35d61e74a949", null ],
     [ "CANconnected", "Interface_8cpp.html#a6f55d9204fc41e23568a392aab638239", null ],
+    [ "floatSpeed", "Interface_8cpp.html#a333f898c62a70650d62a55626c12a6be", null ],
     [ "previousButtonState_CAN", "Interface_8cpp.html#a46709bdab87c13ff4c0a5a41e69b2cca", null ],
     [ "previousButtonState_DSP", "Interface_8cpp.html#ab85e421ccb26cae296438098ad2a743b", null ]
 ];

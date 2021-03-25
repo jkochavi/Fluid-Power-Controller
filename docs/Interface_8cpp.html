@@ -138,12 +138,6 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#af6d88e4ec98f0c1bb01ff4a9d9e931b7">accumulatorPressure</a> (20,&quot;pressure buffer&quot;)</td></tr>
-<tr class="memdesc:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing accumulator pressure values.  <a href="Interface_8cpp.html#af6d88e4ec98f0c1bb01ff4a9d9e931b7">More...</a><br /></td></tr>
-<tr class="separator:af6d88e4ec98f0c1bb01ff4a9d9e931b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aecef6508714e56cdbebb2a8f4613e2b3"><td class="memItemLeft" align="right" valign="top">Queue&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3">bikeSpeed</a> (20,&quot;speed buffer&quot;)</td></tr>
-<tr class="memdesc:aecef6508714e56cdbebb2a8f4613e2b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue for storing bike speed values.  <a href="Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3">More...</a><br /></td></tr>
-<tr class="separator:aecef6508714e56cdbebb2a8f4613e2b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af090274e5f1ebfc12cc507560a557ce7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7">debounce</a> (uint8_t buttonPin, uint8_t length, bool sign=true)</td></tr>
 <tr class="memdesc:af090274e5f1ebfc12cc507560a557ce7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to debounce a signal from a GPIO pin.  <a href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7">More...</a><br /></td></tr>
 <tr class="separator:af090274e5f1ebfc12cc507560a557ce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -192,6 +186,15 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a46709bdab87c13ff4c0a5a41e69b2cca">previousButtonState_CAN</a> = 255</td></tr>
 <tr class="memdesc:a46709bdab87c13ff4c0a5a41e69b2cca"><td class="mdescLeft">&#160;</td><td class="mdescRight">This variable is changed by the CAN task, and keeps track of when the controller needs to push an update to the PLC. <br /></td></tr>
 <tr class="separator:a46709bdab87c13ff4c0a5a41e69b2cca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a7e37eb41ab30ce2710027597139689"><td class="memItemLeft" align="right" valign="top">Share&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a7a7e37eb41ab30ce2710027597139689">accumulatorPressure</a></td></tr>
+<tr class="memdesc:a7a7e37eb41ab30ce2710027597139689"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inter-task variable for storing accumulator pressure values.  <a href="Interface_8cpp.html#a7a7e37eb41ab30ce2710027597139689">More...</a><br /></td></tr>
+<tr class="separator:a7a7e37eb41ab30ce2710027597139689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51293a47184005045b60439ff7c77a22"><td class="memItemLeft" align="right" valign="top">Share&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a51293a47184005045b60439ff7c77a22">bikeSpeed</a></td></tr>
+<tr class="memdesc:a51293a47184005045b60439ff7c77a22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inter-task variable for storing bike speed values.  <a href="Interface_8cpp.html#a51293a47184005045b60439ff7c77a22">More...</a><br /></td></tr>
+<tr class="separator:a51293a47184005045b60439ff7c77a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a333f898c62a70650d62a55626c12a6be"><td class="memItemLeft" align="right" valign="top">Share&lt; int32_t &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a333f898c62a70650d62a55626c12a6be">floatSpeed</a></td></tr>
+<tr class="memdesc:a333f898c62a70650d62a55626c12a6be"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inter-task variable for storing "float" speed values.  <a href="Interface_8cpp.html#a333f898c62a70650d62a55626c12a6be">More...</a><br /></td></tr>
+<tr class="separator:a333f898c62a70650d62a55626c12a6be"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f55d9204fc41e23568a392aab638239"><td class="memItemLeft" align="right" valign="top">Share&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a6f55d9204fc41e23568a392aab638239">CANconnected</a></td></tr>
 <tr class="memdesc:a6f55d9204fc41e23568a392aab638239"><td class="mdescLeft">&#160;</td><td class="mdescRight">Share that stores status of CAN connection.  <a href="Interface_8cpp.html#a6f55d9204fc41e23568a392aab638239">More...</a><br /></td></tr>
 <tr class="separator:a6f55d9204fc41e23568a392aab638239"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -201,71 +204,13 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 <p>As discussed in the section, <a class="el" href="index.html#s_software">Software Design</a>, the task with the highest priority is <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>, which must quickly poll the hall effect sensor to measure the speed of the vehicle. A high-level task diagram is shown in Figure 1.</p>
 <p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig19.png" alt="" style="width:400px;" class="inline"/> <br  />
 <b>Figure 1.</b> Inter-controller system boundary diagram.</p>
+<p>The sensor task, <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a> operates in a simple Finite State Machine (FSM) that switches states based on the high/low status of the hall effect signal. An FSM diagram is shown in the figure below.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fsm.png" alt="" style="width:400px;" class="inline"/> <br  />
+<b>Figure 2.</b> FSM diagram for <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>.</p>
+<p>In State 1, the task continuously waits for a hall effect trigger. Since the sensor is active-low, the task uses the function <a class="el" href="Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7" title="Function to debounce a signal from a GPIO pin.">debounce()</a> to identify when the signal transitions from high to low. When this change is identified, the task calculates the speed of the vehicle and stores it in two inter-task variables: bikeSpeed and floatSpeed. See variable descriptions for more information. After the speed is calculated, the task transitions to State 2 to wait until the signal transitions back to high. When the signal returns from low to high, the task transitions back to State 1 to wait for the next pulse.</p>
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi</dd></dl>
 <dl class="section date"><dt>Date</dt><dd>8 Dec 2020 Original file </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
-<a id="af6d88e4ec98f0c1bb01ff4a9d9e931b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af6d88e4ec98f0c1bb01ff4a9d9e931b7">&#9670;&nbsp;</a></span>accumulatorPressure()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Queue&lt;int32_t&gt; accumulatorPressure </td>
-          <td>(</td>
-          <td class="paramtype">20&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&quot;pressure buffer&quot;&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Queue for storing accumulator pressure values. </p>
-<p>Storing these values in a buffer makes up for any mismatch in transmission frequencies between the PLC and this controller. </p>
-
-</div>
-</div>
-<a id="aecef6508714e56cdbebb2a8f4613e2b3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aecef6508714e56cdbebb2a8f4613e2b3">&#9670;&nbsp;</a></span>bikeSpeed()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Queue&lt;int32_t&gt; bikeSpeed </td>
-          <td>(</td>
-          <td class="paramtype">20&#160;</td>
-          <td class="paramname">, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&quot;speed buffer&quot;&#160;</td>
-          <td class="paramname">&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Queue for storing bike speed values. </p>
-<p>Storing these values in a buffer makes up for any mismatch in transmission frequencies between the display and hall effect tasks. </p>
-
-</div>
-</div>
 <a id="ae7b4ba8037c51907ef76cdd1c2854fae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7b4ba8037c51907ef76cdd1c2854fae">&#9670;&nbsp;</a></span>CAN_readPressure()</h2>
 
@@ -548,6 +493,40 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 </div>
 </div>
 <h2 class="groupheader">Variable Documentation</h2>
+<a id="a7a7e37eb41ab30ce2710027597139689"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7a7e37eb41ab30ce2710027597139689">&#9670;&nbsp;</a></span>accumulatorPressure</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Share&lt;int32_t&gt; accumulatorPressure</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inter-task variable for storing accumulator pressure values. </p>
+<p>Storing these values in a Share makes up for any mismatch in transmission frequencies between the PLC and this controller. </p>
+
+</div>
+</div>
+<a id="a51293a47184005045b60439ff7c77a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51293a47184005045b60439ff7c77a22">&#9670;&nbsp;</a></span>bikeSpeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Share&lt;int32_t&gt; bikeSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inter-task variable for storing bike speed values. </p>
+<p>Storing these values in a Share makes up for any mismatch in transmission frequencies between the display and hall effect tasks. </p>
+
+</div>
+</div>
 <a id="a6f55d9204fc41e23568a392aab638239"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6f55d9204fc41e23568a392aab638239">&#9670;&nbsp;</a></span>CANconnected</h2>
 
@@ -562,6 +541,23 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 
 <p>Share that stores status of CAN connection. </p>
 <p>A value of TRUE means that a CAN connection is established, and a value of FALSE means that an error has occured. </p>
+
+</div>
+</div>
+<a id="a333f898c62a70650d62a55626c12a6be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a333f898c62a70650d62a55626c12a6be">&#9670;&nbsp;</a></span>floatSpeed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Share&lt;int32_t&gt; floatSpeed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Inter-task variable for storing "float" speed values. </p>
+<p>The Nextion display is incapable of working with floating-point numbers. Instead, Nextion Editor has a way of "faking" floating point numbers by splicing an integer with an artifical decimal point, and then shifting it around to simulate a decimal number. Therefore, to display a the vehicle speed in the format, XX.X, we can multiply the calculated speed by 10, and then the Nextion will shift the decimal place left by 1. For example, if <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a> were to calculate a speed of 10.52 mph, the task will first multiply by 10 and then round to the nearest integer, which will equal 105. Then, <a class="el" href="Interface_8cpp.html#ab33e4972e861b45fe133b914aaec9677" title="Task which interacts with the Nextion display.">task_display()</a> will send the number 105 to the Nextion. The Nextion's software will store the number 105 in its simulated floating point number variable, with a decimal point inserted 1 digit to the left. Thus, the screen will display: 10.5. </p>
 
 </div>
 </div>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['debounce_47',['debounce',['../Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7',1,'Interface.cpp']]]
+  ['loop_51',['loop',['../main_8cpp.html#afe461d27b9c48d5921c00d521181f12f',1,'main.cpp']]]
 ];

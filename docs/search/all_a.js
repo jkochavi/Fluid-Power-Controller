@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['regen_33',['REGEN',['../Interface_8h.html#a11b3b506179458dd29a9fbded3921e05',1,'Interface.h']]],
-  ['regenbutton_34',['regenButton',['../Interface_8cpp.html#a19f61c5c02d0fdae4e4085521c810c37',1,'Interface.cpp']]]
+  ['printed_20circuit_20board_20schematic_30',['Printed Circuit Board Schematic',['../page5.html',1,'']]],
+  ['pedal_31',['PEDAL',['../Interface_8h.html#a00b776b8d8a7f1e9d409d44bb9a74fe6',1,'Interface.h']]],
+  ['previousbuttonstate_5fcan_32',['previousButtonState_CAN',['../Interface_8cpp.html#a46709bdab87c13ff4c0a5a41e69b2cca',1,'Interface.cpp']]],
+  ['previousbuttonstate_5fdsp_33',['previousButtonState_DSP',['../Interface_8cpp.html#ab85e421ccb26cae296438098ad2a743b',1,'Interface.cpp']]]
 ];

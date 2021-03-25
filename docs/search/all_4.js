@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['hall1_18',['HALL1',['../Interface_8cpp.html#abe94cf4e3630fe1c4a543d69b0cd01a6',1,'Interface.cpp']]],
-  ['hf_20impulse_19',['HF Impulse',['../page2.html',1,'']]]
+  ['floatspeed_18',['floatSpeed',['../Interface_8cpp.html#a333f898c62a70650d62a55626c12a6be',1,'Interface.cpp']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['bikespeed_44',['bikeSpeed',['../Interface_8cpp.html#aecef6508714e56cdbebb2a8f4613e2b3',1,'Interface.cpp']]]
+  ['debounce_46',['debounce',['../Interface_8cpp.html#af090274e5f1ebfc12cc507560a557ce7',1,'Interface.cpp']]]
 ];

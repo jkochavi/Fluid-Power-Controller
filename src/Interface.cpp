@@ -19,6 +19,24 @@
  * <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig19.png" style="width:400px;">
  * <br /><b>Figure 1.</b> Inter-controller system boundary diagram.
  *
+ * The sensor task, task_HALL1() operates in a simple 
+ * Finite State Machine (FSM) that switches states
+ * based on the high/low status of the hall effect signal. An
+ * FSM diagram is shown in the figure below.
+ * 
+ * <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fsm.png" style="width:400px;">
+ * <br /><b>Figure 2.</b> FSM diagram for task_HALL1().
+ * 
+ * In State 1, the task continuously waits for a hall effect trigger. Since
+ * the sensor is active-low, the task uses the function debounce() to identify
+ * when the signal transitions from high to low. When this change is identified,
+ * the task calculates the speed of the vehicle and stores it in two inter-task
+ * variables: bikeSpeed and floatSpeed. See variable descriptions for more 
+ * information. After the speed is calculated, the task transitions to State 2
+ * to wait until the signal transitions back to high. When the signal returns
+ * from low to high, the task transitions back to State 1 to wait for the next
+ * pulse.
+ * 
  *  @author  Jordan Kochavi
  * 
  *  @date    8 Dec 2020 Original file
