@@ -1,15 +1,14 @@
 /** @file Interface.h
  *    This is the header file for the inteface task functions.
  *  @author Jordan Kochavi
- * 
  *  @date   8 Dec 2020 Original file
  */
 
 #ifndef UI_H
 #define UI_H
-#include <Arduino.h>        // Include Arduino library  
-#include <PrintStream.h>    // Include PrintStream libary
-#include <STM32FreeRTOS.h>  // Include FreeRTOS library
+#include "Arduino.h"        // Include Arduino library  
+#include "PrintStream.h"    // Include PrintStream libary
+#include "STM32FreeRTOS.h"  // Include FreeRTOS library
 //  Some compiler definitions that make coding a bit easier        
 /// @brief Macro definition for direct drive button state.          
 #define DIRECT    1

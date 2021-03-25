@@ -5,13 +5,12 @@
  *    header file.
  *
  *  @author  Jordan Kochavi
- * 
  *  @date    8 Dec 2020 Original file
  */
 
-#include <Arduino.h>                              // Include Arduino library
-#include <PrintStream.h>                          // Include PrintStream library
-#include <STM32FreeRTOS.h>                        // Include FreeRTOS library
+#include "Arduino.h"                              // Include Arduino library
+#include "PrintStream.h"                          // Include PrintStream library
+#include "STM32FreeRTOS.h"                        // Include FreeRTOS library
 #include "Interface.h"                            // Include custom interface library
 
 /** @brief   Arduino setup function which runs once at program startup.
@@ -23,30 +22,24 @@ void setup()
     Serial.begin(115200);                         // Begin Serial @ 115200 baud
     delay(500);                                   // Pause 0.5 seconds
     Serial.println("Starting program...");        // Print for debugging
-    
     xTaskCreate (task_HALL1,                      // Create task for user interface
                  "Bike Speed",                    // Name for printouts
                  512,                             // Stack size
                  NULL,                            // Parameters for task fn.
                  1,                               // Priority
                  NULL);                           // Task handle
-
     xTaskCreate (task_CAN,                        // Create task for user interface
                  "CAN communication",             // Name for printouts
                  1024,                            // Stack size
                  NULL,                            // Parameters for task fn.
                  2,                               // Priority
                  NULL);                           // Task handle
-
     xTaskCreate (task_display,                    // Create task for user interface
                  "Nextion communication",         // Name for printouts
                  1024,                             // Stack size
                  NULL,                            // Parameters for task fn.
                  3,                               // Priority
                  NULL);                           // Task handle
-    
-    
-    
     vTaskStartScheduler ();                       // Begin task scheduler
 }
 

@@ -38,7 +38,6 @@
  * pulse.
  * 
  *  @author  Jordan Kochavi
- * 
  *  @date    8 Dec 2020 Original file
  */
 
@@ -46,7 +45,7 @@
 #include "taskshare.h"           // Include libary for inter-task variables
 #include "taskqueue.h"           // Include library for inter-task buffers
 #include "EasyNextionLibrary.h"  // Include Nextion library
-#include <STM32FreeRTOS.h>       // Include FreeRTOS library
+#include "STM32FreeRTOS.h"       // Include FreeRTOS library
 #include "SPI.h"                 // Include SPI library
 #include "mcp2515.h"             // Include MCP2515 library
 /// @brief Macro definition for GPIO pin attached to coast button.
@@ -452,11 +451,11 @@ void task_CAN (void* p_params)
 
 /** @brief   Task which reads a hall effect sensor. 
  *  @details This task polls the GPIO pin for the hall effect sensor. 
- *           Whenever the signal reads high, the task retains the elapsed
+ *           Whenever the triggers low, the task retains the elapsed
  *           time, in milliseconds, between pulses. We use the circumference of
  *           the wheel to calculate the distance traveled between pulses,
  *           and then divide by the time between pulses to calculate speed, which
- *           is subsequently converted to RPM. 
+ *           is subsequently converted to miles per hour. 
  *  @param   p_params A pointer to function parameters which we don't use.
  */
 void task_HALL1 (void* p_params)
