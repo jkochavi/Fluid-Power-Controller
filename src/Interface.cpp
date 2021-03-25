@@ -58,18 +58,38 @@ uint8_t previousButtonState_DSP = 255;                      // Init to force dis
  * to the PLC.
  */
 uint8_t previousButtonState_CAN = 255;                      // Init to force CAN transmission
-/** @brief   Queue for storing accumulator pressure values. 
- *  @details Storing these values in a buffer makes up for any mismatch
+/** @brief   Inter-task variable for storing accumulator pressure values. 
+ *  @details Storing these values in a Share makes up for any mismatch
  *           in transmission frequencies between the PLC and this
  *           controller. 
  */
-Queue <int32_t> accumulatorPressure(20,"pressure buffer");
-/** @brief   Queue for storing bike speed values. 
- *  @details Storing these values in a buffer makes up for any 
+Share <int32_t> accumulatorPressure;
+/** @brief   Inter-task variable for storing bike speed values. 
+ *  @details Storing these values in a Share makes up for any 
  *           mismatch in transmission frequencies between the 
  *           display and hall effect tasks.
  */
-Queue <int32_t> bikeSpeed(20,"speed buffer");
+Share <int32_t> bikeSpeed;
+/** @brief   Inter-task variable for storing "float" speed values.
+ *  @details The Nextion display is incapable of working with 
+ *           floating-point numbers. Instead, Nextion Editor has
+ *           a way of "faking" floating point numbers by splicing
+ *           an integer with an artifical decimal point, and then
+ *           shifting it around to simulate a decimal number. 
+ *           Therefore, to display a the vehicle speed in the 
+ *           format, XX.X, we can multiply the calculated speed
+ *           by 10, and then the Nextion will shift the decimal 
+ *           place left by 1. For example, if task_HALL1() 
+ *           were to calculate a speed of 10.52 mph, the task
+ *           will first multiply by 10 and then round to the 
+ *           nearest integer, which will equal 105. Then, 
+ *           task_display() will send the number 105 to the Nextion.
+ *           The Nextion's software will store the number 105 in 
+ *           its simulated floating point number variable, with 
+ *           a decimal point inserted 1 digit to the left. Thus,
+ *           the screen will display: 10.5. 
+ */
+Share <int32_t> floatSpeed;
 /** @brief   Share that stores status of CAN connection.
  *  @details A value of TRUE means that a CAN connection is established,
  *           and a value of FALSE means that an error has occured.
@@ -316,6 +336,7 @@ void task_display (void* p_params)
      * display for printing.
      */
     int32_t localVar_bikeSpeed = 0;                                          // Local variable for current bike speed
+    int32_t localVar_floatSpeed = 0;
     pinMode(coastButton, INPUT_PULLUP);                                      // Configure button pin for input
     pinMode(directButton, INPUT_PULLUP);                                     // Configure button pin for input
     pinMode(boostButton, INPUT_PULLUP);                                      // Configure button pin for input
@@ -348,12 +369,13 @@ void task_display (void* p_params)
             myNextion.writeStr("page0.t7.txt","Not Connected");              //     Modify screen text to show not connected
         }                                                                    // 
         bikeSpeed.get(localVar_bikeSpeed);                                   // Pull speed from buffer
-        Serial.println(localVar_bikeSpeed);
-        myNextion.writeNum("page0.n1.val",localVar_bikeSpeed);               // Write the speed to the display
+        floatSpeed.get(localVar_floatSpeed);                                 // Pull "float" speed from buffer
+        myNextion.writeNum("page0.va1.val",localVar_bikeSpeed);              // Write the speed to the display
+        myNextion.writeNum("page0.x0.val",localVar_floatSpeed);              // Write the "float" speed to the display
         // This type of delay waits until the given number of RTOS ticks have
         // elapsed since the task previously began running. This prevents 
         // inaccuracy due to not accounting for how long the task took to run
-        vTaskDelayUntil (&xLastWakeTime, 100);
+        vTaskDelayUntil (&xLastWakeTime, 160);
     }
 }
 
@@ -381,7 +403,7 @@ void task_CAN (void* p_params)
      * This task pushes the value to an inter-task buffer, 
      * which is used by the display task to print to the user.
      */ 
-    int32_t localVarPressure;                          // Local variable for accumulator pressure
+    int32_t localVarPressure = 0;                      // Local variable for accumulator pressure
     // An MCP2515 object used to communicate with the CAN controller.
     MCP2515 my2515(CS);                                // Create MCP2515 object
     my2515.reset();                                    // Initalize the controller
@@ -442,42 +464,43 @@ void task_HALL1 (void* p_params)
      */ 
     uint16_t timeOut = 3000;                                              // Local variable for speed timeout
     // Stores timer ticks, in milliseconds, at the last pulse.
-    unsigned long previousTime = 0;                                       // Local variables to keep track of 
+    unsigned long previousTime = millis();                                // Local variables to keep track of 
     // Stores timer ticks, in milliseconds, at the current pulse. 
-    unsigned long currentTime = 0;                                        // time between pulses
+    unsigned long currentTime = millis();                                 // Time between pulses
+    // State variable for finite state machine.
+    uint8_t state = 1;                                                    // Initialize to 1
     for (;;)                                                              // A forever loop...
     {                                                                     //    
-                                                                          //
-        currentTime = millis();   
-        bikeSpeed.put(currentTime - previousTime);
-        previousTime = currentTime;
-        /*
-        if ((currentTime - previousTime) > timeOut)
-        {
-            bikeSpeed.put(0);
-            previousTime = currentTime;
-        }
-        else if (debounce(HALL1,5,false))                                 // If a trigger is identified...
+        if (state == 1)                                                   // State 1 - Wait for trigger
         {                                                                 //
-            bikeSpeed.put(currentTime-previousTime);
-            //speed = distanceTraveled / (currentTime - previousTime);         //   Compute speed based on circumfrence of circle
-            //speed = speed*1000*3600/63360;                                //   Convert speed to miles per hour
-            previousTime = currentTime;                                      //   Set previousTime for next trigger
-            //bikeSpeed.put((int32_t)speed);                                //   Put the speed in shared task variable
+            currentTime = millis();                                       // Store current time count, in ms
+            if (debounce(HALL1, 5, false))                                // If an active-low trigger is identified...
+            {                                                             //    
+                speed = distanceTraveled / (currentTime - previousTime);  //    Calculate distance (delta X /delta t)
+                speed = speed*1000*3600/63360;                            //    Convert to miles per hour
+                bikeSpeed.put((int32_t)speed);                            //    Push to shared variable
+                speed *= 10;                                              //    Multiply by 10 for "float conversion"
+                floatSpeed.put((int32_t)speed);                           //    Push to shared variable
+                state = 2;                                                //    Transition to state 2
+            }                                                             //
+            else if ((currentTime - previousTime) > timeOut)              // Else if a timeout has occured...
+            {                                                             //  
+                bikeSpeed.put(0);                                         //    Set speed equal to 0  
+                floatSpeed.put(0);                                        //    Set speed equal to 0
+                state = 2;                                                //    Transition to state 2
+            }                                                             //
         }                                                                 //
-        
-                                    
-        speed += 1;
-        if (speed > 50)
-        {
-            speed = 0;
-        }
-        */
-
+        else if (state == 2)                                              // State 2 - Wait for return to normal
+        {                                                                 //
+            if (debounce(HALL1, 5, true))                                 // If the trigger goes away...
+            {                                                             //
+                previousTime = currentTime;                               //    Reset for next speed check
+                state = 1;                                                //    Return to state 1
+            }                                                             //
+        }                                                                 //
         // This type of delay waits until the given number of RTOS ticks have
         // elapsed since the task previously began running. This prevents 
         // inaccuracy due to not accounting for how long the task took to run
         vTaskDelayUntil (&xLastWakeTime, 20);
-        
     }
 }
