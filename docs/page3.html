@@ -97,9 +97,70 @@ $(document).ready(function(){initNavTree('page3.html',''); initResizable(); });
 <div class="title">Nextion Editor </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>The purpose of this page is to describe the software design for the Nextion display. The display is programmed in Nextion Editor, which is a configuration tool produced by Nextion.</p>
-<dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>March 4, 2021 </dd></dl>
+<div class="textblock"><p>The purpose of this page is to describe the software design for the Nextion display. The display is programmed in Nextion Editor, which is a configuration tool produced by Nextion. The module has a single, two-wire UART port, which is used to program the display and communicate with the STM32 PCB. The module connects to Nextion Editor with a USB to Serial converter, which is shown in Figure 1 below.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/ttl.png" alt="" style="width:500px;" class="inline"/> <br  />
+<b>Figure 1.</b> USB to serial converter used to program the Nextion display.</p>
+<p>As shown above, this particular USB to Serial converter, which ships with the Nextion display has three switches. This allows the module to be used to convert USB to other forms of two-wire communication, such as RS-485 and TTL. To successfully connect to the Nextion, the switches on the USB to Serial converter must be toggled to the states shown in Figure 1: Switch 1 on, Switch 2 off, and the third switch directed away from the TTL label.</p>
+<p>The table below describes the different variables and software objects used in the Nextion configuration file. Each object belows to the page that it was created on. Global variables can be accessed on any page and local variables can only be accessed on the page that it was defined on.</p>
+<table style="float:left" border="border: 1px solid black">
+<tr>
+<th>Object Name </th><th>Type </th><th>Scope </th><th>Description  </th></tr>
+<tr>
+<td>page0.va0 </td><td>Variable </td><td>Global </td><td>Stores the current drive mode. Identical to buttonState in <a class="el" href="Interface_8cpp.html">Interface.cpp</a>, 1-&gt;Direct, 2-&gt;Coast, 3-&gt;Regen, 4-&gt;Boost, 5-&gt;Pedal. <br  />
+  </td></tr>
+<tr>
+<td>page0.va1 </td><td>Variable </td><td>Global </td><td>Vehicle speed, in miles per hour, <em>integer form</em>. This value is used by the Plot page to chart speed vs. time.  </td></tr>
+<tr>
+<td>page0.tm0 </td><td>Timer </td><td>Local </td><td>This timer object has a period of 50 ms. Every 50 ms, the green bars for the speed and accumulator pressure are updated based on the current speed and pressure.  </td></tr>
+<tr>
+<td>page0.n0 </td><td>Number </td><td>Global </td><td>Accumulator pressure, in psi.  </td></tr>
+<tr>
+<td>page0.x0 </td><td>Float </td><td>Global </td><td>Vehicle speed, in miles per hour, <em>float form</em>. This value is only used on the home page to add resolution to the speed measurement.  </td></tr>
+<tr>
+<td>page4.tm0 </td><td>Timer </td><td>Local </td><td>This timer object has a period of 50 ms. It is used to update the waveform. Every 50 ms, the plot is updated with the current vehicle speed and the distance traveled is calculated.  </td></tr>
+<tr>
+<td>page4.va0 </td><td>Variable </td><td>Local </td><td>Stores the current vehicle speed <em>in integer form</em>, pulled from the value of page0.va1. This value must be reassigned to a local variable in order to correctly calculate distance traveled.  </td></tr>
+<tr>
+<td>page4.va1 </td><td>Variable </td><td>Local </td><td>Stores the intermediary calculation for change in distance traveled (see asterisk below).  </td></tr>
+<tr>
+<td>page4.x0 </td><td>Float </td><td>Global </td><td>Distance traveled, in feet. As discussed in <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>, this value is displayed to four decimal places solely as a result of calculating distance traveled, as the Nextion is incapable of floating point math.  </td></tr>
+</table>
+<p><br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+</p>
+<p>There are six pages in the Nextion interface (zero-indexed). The page IDs and descriptions are summarized in the table below. </p><table style="float:left" border="border: 1px solid black">
+<tr>
+<th>Page ID </th><th>Description  </th></tr>
+<tr>
+<td>page0 </td><td>Home screen and dashboard.  </td></tr>
+<tr>
+<td>page1 </td><td>Help screen. It shows a QR code that directs to this wiki.  </td></tr>
+<tr>
+<td>page2 </td><td>Drive mode switch board. Shows five virtual switches that change the vehicle's drive mode.  </td></tr>
+<tr>
+<td>page3 </td><td>Hydraulic circuit. Shows the manifold schematic and indicates which valves are currently energized.  </td></tr>
+<tr>
+<td>page4 </td><td>Plot. Shows a plot of vehicle speed vs. time, and displays distance traveled (only while viewing the Plot page).  </td></tr>
+<tr>
+<td>page5 </td><td>Animation. Shows a 3D orbit of the hydraulic vehicle.  <br  />
+ </td></tr>
+</table>
+<p><br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+ <br  />
+</p>
+<p><br  />
+ </p><dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>March 25, 2021 </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->
