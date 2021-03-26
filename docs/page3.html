@@ -121,7 +121,7 @@ $(document).ready(function(){initNavTree('page3.html',''); initResizable(); });
 <tr>
 <td>page4.va0 </td><td>Variable </td><td>Local </td><td>Stores the current vehicle speed <em>in integer form</em>, pulled from the value of page0.va1. This value must be reassigned to a local variable in order to correctly calculate distance traveled.  </td></tr>
 <tr>
-<td>page4.va1 </td><td>Variable </td><td>Local </td><td>Stores the intermediary calculation for change in distance traveled (see asterisk below).  </td></tr>
+<td>page4.va1 </td><td>Variable </td><td>Local </td><td>Stores the intermediary calculation for change in distance traveled (see bullet point at the bottom of the page).  </td></tr>
 <tr>
 <td>page4.x0 </td><td>Float </td><td>Global </td><td>Distance traveled, in feet. As discussed in <a class="el" href="Interface_8cpp.html#a6d50525ab6bbea9007958d7feaf83360" title="Task which reads a hall effect sensor.">task_HALL1()</a>, this value is displayed to four decimal places solely as a result of calculating distance traveled, as the Nextion is incapable of floating point math.  </td></tr>
 </table>
@@ -159,7 +159,13 @@ $(document).ready(function(){initNavTree('page3.html',''); initResizable(); });
  <br  />
 </p>
 <p><br  />
- </p><dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
+</p><ul>
+<li>Since the Nextion display can't work with floating point numbers, we calculate distance traveled by multiplying by several factors of 10, and then shifting the decimal place of page4.x0 over appropriately. The change in distance traveled is calculated by multiplying the current vehicle speed by change in time, which is the update period of page4.tim0 (50 ms). Using the equation for distance traveled,</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/dx.png" alt="" style="width:300px" class="inline"/> <br  />
+</p>
+<p>page4.va0 is multiplied by 735 to calculate change in distance traveled x10^4. In order to return this variable to the correct magnitude, we shift the decimal point in the simulated floating point number, page4.x0, by 4, which appears to decrease its magnitude by 10000.</p>
+<dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>March 25, 2021 </dd></dl>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
