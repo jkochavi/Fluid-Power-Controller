@@ -38,6 +38,12 @@ var NAVTREE =
     [ "Controller Area Network (CAN)", "page4.html", null ],
     [ "Printed Circuit Board Schematic", "page5.html", null ],
     [ "Additional Support Files", "page6.html", null ],
+    [ "Design Verification and Testing", "page7.html", [
+      [ "Testing Overview", "page7.html#s_bg", null ],
+      [ "Light Splashing", "page7.html#s_splash", null ],
+      [ "Direct Flow", "page7.html#s_side", null ],
+      [ "Conclusions", "page7.html#s_conclusions", null ]
+    ] ],
     [ "Files", "files.html", [
       [ "File List", "files.html", "files_dup" ],
       [ "File Members", "globals.html", [

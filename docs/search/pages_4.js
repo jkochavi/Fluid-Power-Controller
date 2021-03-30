@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['printed_20circuit_20board_20schematic_81',['Printed Circuit Board Schematic',['../page5.html',1,'']]]
+  ['nextion_20editor_82',['Nextion Editor',['../page3.html',1,'']]]
 ];

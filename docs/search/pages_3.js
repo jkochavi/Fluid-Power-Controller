@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['nextion_20editor_80',['Nextion Editor',['../page3.html',1,'']]]
+  ['hf_20impulse_81',['HF Impulse',['../page2.html',1,'']]]
 ];
