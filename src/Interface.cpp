@@ -253,8 +253,8 @@ int32_t CAN_readPressure(MCP2515 &node)
         returnVal = CAN_OTHER;                          //      Initialize to message-received case code.
         if (CANmsg.can_id == 385)                       //      If the ID is 385, COB-ID for receiving PDO1 message...
         {                                               //
-            int32_t highByte = CANmsg.data[0];          //              Then store the low byte
-            int32_t lowByte = CANmsg.data[1];           //              And store the high byte
+            int32_t highByte = CANmsg.data[1];          //              Then store the low byte
+            int32_t lowByte = CANmsg.data[0];           //              And store the high byte
             returnVal = lowByte | (highByte<<8);        //              Concatenate into one number with bit-shifting
         }                                               //
     }                                                   //
