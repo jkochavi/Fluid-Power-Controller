@@ -261,6 +261,36 @@ int32_t CAN_readPressure(MCP2515 &node)
     return returnVal;                                   // Return the number
 }
 
+/** @brief   Function that calculates a pressure, in psi, based on a
+ *           raw sensor reading.  
+ *  @details The pressure transducer that is connected to the ECDR 0506-A
+ *           is configured to output an analog voltage, ranging from 
+ *           0.5 - 4.5 Vdc. When the controller receives input from this
+ *           sensor, it interpret's the sensor's reading as an integer
+ *           ranging from 0 - 5000, which represents 0 - 5 Volts. 
+ *           Therefore, the output of CAN_readPressure() will always be 
+ *           an integer ranging from 500 - 4500. When the pressure 
+ *           outputs its maximum voltage, which is 4.5 Volts, it reads
+ *           its maximum pressure of 5000 psi. When it outputs its 
+ *           minimum voltage, which is 0.5 Volts, it reads its 
+ *           minimum pressure, which is 0 psi. Using these constraints,
+ *           a linear gain and offset were determined. The gain has a 
+ *           value of 1.25, with an offset of 625. After applying these
+ *           transformations to convert the raw sensor reading into a 
+ *           pressure measurement, this function saturates the calculation
+ *           between 0 and 5000 psi.   
+ *  @param   sensorReading The output of CAN_readPressure(). An integer
+ *           between 0 and 5000.
+ *  @return  The pressure measurement, in psi, as a signed 32-bit integer. 
+ */
+int32_t calculatePressure(int32_t sensorReading)
+{
+    float calculatedVal = sensorReading*1.25 - 625; // Convert to psi
+    if      (calculatedVal < 0)    {return 0;}      // If the pressure is less than 0... then saturate to 0
+    else if (calculatedVal > 5000) {return 5000;}   // If the pressure is greater than 5000... then saturate to 5000
+    else    {return (int32_t)sensorReading;}        // Otherwise, return the pressure
+}
+
 /** @brief   Function to update the drive mode on the Nextion.
  *  @details This function updates the drive mode on the Nextion
  *           display. The user can change the drive mode in two ways:
@@ -434,6 +464,7 @@ void task_CAN (void* p_params)
         {                                              //
             if (localVarPressure != CAN_OTHER)         //       If the appropriate message was received...
             {                                          //
+                localVarPressure = calculatePressure(localVarPressure); // Convert to psi
                 accumulatorPressure.put(localVarPressure); //   Push current pressure to the buffer
             }                                          //
             CANconnected.put(true);                    //       Alert CAN status as connected
