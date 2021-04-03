@@ -285,7 +285,7 @@ int32_t CAN_readPressure(MCP2515 &node)
  */
 int32_t calculatePressure(int32_t sensorReading)
 {
-    float calculatedVal = sensorReading*1.25 - 625; // Convert to psi
+    float calculatedVal = sensorReading*10/9 - 5000/9; // Convert to psi
     if      (calculatedVal < 0)    {return 0;}      // If the pressure is less than 0... then saturate to 0
     else if (calculatedVal > 5000) {return 5000;}   // If the pressure is greater than 5000... then saturate to 5000
     else    {return (int32_t)sensorReading;}        // Otherwise, return the pressure
@@ -345,7 +345,7 @@ void updateDriveMode(EasyNex &display)
     }                                                               //
     else if (checkTouchPress)                                       // Else if a switch was toggled on the display...
     {                                                               //
-        buttonState = display.readNumber("page2.va1.val");          //      Then assign buttonState to what it was assigned to on the display 
+        buttonState = display.readNumber("page0.va0.val");          //      Then assign buttonState to what it was assigned to on the display 
         display.writeNum("page2.va1.val",0);                        //      Lower the Nextion flag
         previousButtonState_DSP = buttonState;                      //      Reset to prevent continuous transmitting
     }
