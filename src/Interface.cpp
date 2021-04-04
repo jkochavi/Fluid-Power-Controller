@@ -278,7 +278,16 @@ int32_t CAN_readPressure(MCP2515 &node)
  *           value of 1.25, with an offset of 625. After applying these
  *           transformations to convert the raw sensor reading into a 
  *           pressure measurement, this function saturates the calculation
- *           between 0 and 5000 psi.   
+ *           between 0 and 5000 psi. A plot of the pressure transducer 
+ *           calibration curve is shown in the graph below. 
+ * 
+ *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/pressureTransducer.png" style="width:400px;">
+ * 
+ *           The curve was obtained from the minimum and maximum voltage
+ *           outputs, as reflected in the pressure transducer's datasheet.
+ *           During testing, the linear relationship above was determined
+ *           to have an exactly 100 psi offset from the analog pressure
+ *           gauge on the vehicle. This offset was accounted for in this function.   
  *  @param   sensorReading The output of CAN_readPressure(). An integer
  *           between 0 and 5000.
  *  @return  The pressure measurement, in psi, as a signed 32-bit integer. 
