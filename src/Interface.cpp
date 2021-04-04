@@ -241,6 +241,8 @@ void CAN_sendPress(MCP2515 &node)
  *           byte by 8, and adding it to the low byte. The function returns a 
  *           32-bit integer for printing to the Nextion.
  *  @param node The MCP2515 controller that we are interfacing with.
+ *  @return  A signed 32-bit integer containing the analog output of the pressure
+ *           transducer. This integer carries units of millivolts. 
  */
 int32_t CAN_readPressure(MCP2515 &node)
 {
@@ -288,6 +290,9 @@ int32_t CAN_readPressure(MCP2515 &node)
  *           During testing, the linear relationship above was determined
  *           to have an exactly 100 psi offset from the analog pressure
  *           gauge on the vehicle. This offset was accounted for in this function.   
+ *           The pressure transducer is installed in the hydraulic manifold. 
+ *           It is an Ashcroft G2 pressure transmitter. Its datasheet and
+ *           wiring details are available at <a href="https://ashcroft.eu/pictures/pdf/manual-transducers-G2-T2.pdf"><b>this link</b></a>.
  *  @param   sensorReading The output of CAN_readPressure(). An integer
  *           between 0 and 5000.
  *  @return  The pressure measurement, in psi, as a signed 32-bit integer. 
