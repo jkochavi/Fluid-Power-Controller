@@ -159,6 +159,10 @@ Functions</h2></td></tr>
 <tr class="memitem:ae7b4ba8037c51907ef76cdd1c2854fae"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae">CAN_readPressure</a> (MCP2515 &amp;node)</td></tr>
 <tr class="memdesc:ae7b4ba8037c51907ef76cdd1c2854fae"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to read the accumulator pressure from the PLC.  <a href="Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae">More...</a><br /></td></tr>
 <tr class="separator:ae7b4ba8037c51907ef76cdd1c2854fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fc2703fa5ce6fe2e51c0ff064aff495"><td class="memItemLeft" align="right" valign="top">int32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a6fc2703fa5ce6fe2e51c0ff064aff495">calculatePressure</a> (int32_t sensorReading)</td></tr>
+<tr class="memdesc:a6fc2703fa5ce6fe2e51c0ff064aff495"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function that calculates a pressure, in psi, based on a raw sensor reading. <br  />
+  <a href="Interface_8cpp.html#a6fc2703fa5ce6fe2e51c0ff064aff495">More...</a><br /></td></tr>
+<tr class="separator:a6fc2703fa5ce6fe2e51c0ff064aff495"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a758e3e40f550649d6594bb1c53073dcc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="Interface_8cpp.html#a758e3e40f550649d6594bb1c53073dcc">updateDriveMode</a> (EasyNex &amp;display)</td></tr>
 <tr class="memdesc:a758e3e40f550649d6594bb1c53073dcc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to update the drive mode on the Nextion.  <a href="Interface_8cpp.html#a758e3e40f550649d6594bb1c53073dcc">More...</a><br /></td></tr>
 <tr class="separator:a758e3e40f550649d6594bb1c53073dcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -211,6 +215,37 @@ uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="I
 <dl class="section author"><dt>Author</dt><dd>Jordan Kochavi </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>8 Dec 2020 Original file </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a6fc2703fa5ce6fe2e51c0ff064aff495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fc2703fa5ce6fe2e51c0ff064aff495">&#9670;&nbsp;</a></span>calculatePressure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t calculatePressure </td>
+          <td>(</td>
+          <td class="paramtype">int32_t&#160;</td>
+          <td class="paramname"><em>sensorReading</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function that calculates a pressure, in psi, based on a raw sensor reading. <br  />
+ </p>
+<p>The pressure transducer that is connected to the ECDR 0506-A is configured to output an analog voltage, ranging from 0.5 - 4.5 Vdc. When the controller receives input from this sensor, it interpret's the sensor's reading as an integer ranging from 0 - 5000, which represents 0 - 5 Volts. Therefore, the output of <a class="el" href="Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae" title="Function to read the accumulator pressure from the PLC.">CAN_readPressure()</a> will always be an integer ranging from 500 - 4500. When the pressure outputs its maximum voltage, which is 4.5 Volts, it reads its maximum pressure of 5000 psi. When it outputs its minimum voltage, which is 0.5 Volts, it reads its minimum pressure, which is 0 psi. Using these constraints, a linear gain and offset were determined. The gain has a value of 1.25, with an offset of 625. After applying these transformations to convert the raw sensor reading into a pressure measurement, this function saturates the calculation between 0 and 5000 psi. A plot of the pressure transducer calibration curve is shown in the graph below.</p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/pressureTransducer.png" alt="" style="width:400px;" class="inline"/></p>
+<p>The curve was obtained from the minimum and maximum voltage outputs, as reflected in the pressure transducer's datasheet. During testing, the linear relationship above was determined to have an exactly 100 psi offset from the analog pressure gauge on the vehicle. This offset was accounted for in this function. <br  />
+ </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">sensorReading</td><td>The output of <a class="el" href="Interface_8cpp.html#ae7b4ba8037c51907ef76cdd1c2854fae" title="Function to read the accumulator pressure from the PLC.">CAN_readPressure()</a>. An integer between 0 and 5000. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>The pressure measurement, in psi, as a signed 32-bit integer. </dd></dl>
+
+</div>
+</div>
 <a id="ae7b4ba8037c51907ef76cdd1c2854fae"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae7b4ba8037c51907ef76cdd1c2854fae">&#9670;&nbsp;</a></span>CAN_readPressure()</h2>
 
