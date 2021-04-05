@@ -286,10 +286,7 @@ int32_t CAN_readPressure(MCP2515 &node)
  *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/pressureTransducer.png" style="width:400px;">
  * 
  *           The curve was obtained from the minimum and maximum voltage
- *           outputs, as reflected in the pressure transducer's datasheet.
- *           During testing, the linear relationship above was determined
- *           to have an exactly 100 psi offset from the analog pressure
- *           gauge on the vehicle. This offset was accounted for in this function.   
+ *           outputs, as reflected in the pressure transducer's datasheet.  
  *           The pressure transducer is installed in the hydraulic manifold. 
  *           It is an Ashcroft G2 pressure transmitter. Its datasheet and
  *           wiring details are available at <a href="https://ashcroft.eu/pictures/pdf/manual-transducers-G2-T2.pdf"><b>this link</b></a>.
@@ -299,7 +296,7 @@ int32_t CAN_readPressure(MCP2515 &node)
  */
 int32_t calculatePressure(int32_t sensorReading)
 {
-    float calculatedVal = sensorReading*10/9 - 5000/9 + 100; // Convert to psi
+    float calculatedVal = sensorReading*10/9 - 5000/9;       // Convert to psi
     if      (calculatedVal < 0)    {return 0;}               // If the pressure is less than 0... then saturate to 0
     else if (calculatedVal > 5000) {return 5000;}            // If the pressure is greater than 5000... then saturate to 5000
     else    {return (int32_t)calculatedVal;}                 // Otherwise, return the pressure
