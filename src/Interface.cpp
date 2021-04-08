@@ -456,7 +456,7 @@ void task_display (void* p_params)
  *           This parameter was altered in those files to set the correct
  *           bitrate. 
  * 
- *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/setBitrate.png" style="width:300px;">
+ *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/setBitrate.png" style="width:400px;">
  * 
  *           The image above captures the function, setBitrate(), which is 
  *           part of the MCP2515 library written by GitHub user <i>autowp</i>. 
