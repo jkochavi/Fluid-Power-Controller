@@ -268,7 +268,7 @@ int32_t CAN_readPressure(MCP2515 &node)
  *  @details The pressure transducer that is connected to the ECDR 0506-A
  *           is configured to output an analog voltage, ranging from 
  *           0.5 - 4.5 Vdc. When the controller receives input from this
- *           sensor, it interpret's the sensor's reading as an integer
+ *           sensor, it interprets the sensor's reading as an integer
  *           ranging from 0 - 5000, which represents 0 - 5 Volts. 
  *           Therefore, the output of CAN_readPressure() will always be 
  *           an integer ranging from 500 - 4500. When the pressure 
@@ -295,11 +295,9 @@ int32_t CAN_readPressure(MCP2515 &node)
  *           accuracy of +/- 50 psi. 
  * 
  *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/experimental.png" style="width:600px;">
- * 
- *           The curve was obtained from the minimum and maximum voltage
- *           outputs, as reflected in the pressure transducer's datasheet.  
+ *   
  *           The pressure transducer is installed in the hydraulic manifold. 
- *           It is an Ashcroft G2 pressure transmitter. Its datasheet and
+ *           Its model is an Ashcroft G2 pressure transmitter. Its datasheet and
  *           wiring details are available at <a href="https://ashcroft.eu/pictures/pdf/manual-transducers-G2-T2.pdf"><b>this link</b></a>.
  *  @param   sensorReading The output of CAN_readPressure(). An integer
  *           between 0 and 5000.
