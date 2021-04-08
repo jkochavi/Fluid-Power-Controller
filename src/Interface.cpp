@@ -275,15 +275,26 @@ int32_t CAN_readPressure(MCP2515 &node)
  *           outputs its maximum voltage, which is 4.5 Volts, it reads
  *           its maximum pressure of 5000 psi. When it outputs its 
  *           minimum voltage, which is 0.5 Volts, it reads its 
- *           minimum pressure, which is 0 psi. Using these constraints,
- *           a linear gain and offset were determined. The gain has a 
- *           value of 1.25, with an offset of 625. After applying these
- *           transformations to convert the raw sensor reading into a 
- *           pressure measurement, this function saturates the calculation
- *           between 0 and 5000 psi. A plot of the pressure transducer 
- *           calibration curve is shown in the graph below. 
+ *           minimum pressure, which is 0 psi. 
  * 
- *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/pressureTransducer.png" style="width:400px;">
+ *           The sensor was calibrated by incrementally charging the 
+ *           accumulator in Regenerative Braking mode. The raw sensor
+ *           voltage was recorded along with the accumulator
+ *           pressure. The accumulator pressure was read from an Ashcroft 
+ *           analog pressure gauge, which carries an accuracy of +/- 1.5%. 
+ *           In other words, at 3000 psi, this gauge is accurate to +/- 45 psi. 
+ *           A linear curve fit was applied to the data to determine a relationship
+ *           between the accumulator pressure and sensor voltage. 
+ *
+ *           After applying an experimentally determined curve fit to convert 
+ *           the raw sensor reading into a pressure measurement, this function 
+ *           saturates the calculation between 0 and 5000 psi. A plot of the 
+ *           pressure transducer calibration curve is shown in the graph below. 
+ *           Given the accuracy of the analog pressure gauge, the pressure 
+ *           transducer can reasonably measure the accumulator pressure to an 
+ *           accuracy of +/- 50 psi. 
+ * 
+ *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/experimental.png" style="width:600px;">
  * 
  *           The curve was obtained from the minimum and maximum voltage
  *           outputs, as reflected in the pressure transducer's datasheet.  
