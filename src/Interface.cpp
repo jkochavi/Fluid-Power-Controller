@@ -448,14 +448,25 @@ void task_display (void* p_params)
 
 /** @brief   Task which interacts with the CAN bus. 
  *  @details This task sends the current user-chosen drive mode to the 
- *           PLC, and reads the accumulator pressure, using the CAN bus.
+ *           PLC and reads the accumulator pressure, using the CAN bus.
  *           We interface with the CAN bus using an MCP2515 controller.
  *           On the custom PCB, the MCP2515 controller uses an 8 MHz 
  *           crystal to clock the CAN bitrate. However, the mcp2515.cpp and
  *           mcp2515.h files clock the bitrate using a 16 MHz crystal. 
  *           This parameter was altered in those files to set the correct
- *           bitrate. That modification is not documented, as the files are
- *           from a different source.
+ *           bitrate. 
+ * 
+ *           <img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/setBitrate.png" style="width:300px;">
+ * 
+ *           The image above captures the function, setBitrate(), which is 
+ *           part of the MCP2515 library written by GitHub user <i>autowp</i>. 
+ *           The second argument provided to the function represents the 
+ *           type of oscillator used with the MCP2515 integrated-circuit.
+ *           By default, this value is 16 MHz. However, the PCB designed
+ *           for this project uses an 8 MHz crystal instead of a 16 MHz one.
+ *           To establish the correct communication speed on the CAN bus, 
+ *           this parameter must be changed to MCP_8MHZ, as outlined in 
+ *           red in the image above. 
  *  @param   p_params A pointer to function parameters which we don't use.
  */
 void task_CAN (void* p_params)
