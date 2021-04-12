@@ -100,18 +100,18 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="textblock"><h1><a class="anchor" id="s_overview"></a>
 Wiki Overview</h1>
 <p>Welcome to the official support documentation for Cal Poly's NFPA Fluid Powered Vehicle Challenge team! On this wiki, you will find references and files for various elements of the vehicle's mechatronics system. This wiki will expand as future teams iterate on existing design work. Ownership of the wiki is transferred to the new team; the current team's name and logo are visible on this page as well.</p>
-<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/Logo.png" alt="Soulenoid Cycle Logo" class="inline"/></p>
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/vehicle2.png" alt="" style="width:900px;" class="inline"/></p>
 <h1><a class="anchor" id="s_intro"></a>
 Project Introduction</h1>
 <p>This report discusses the design and prototyping of a custom CAN node user interface for the electronic control system on a hydraulically-powered vehicle. The vehicle’s hydraulic circuit consists of five solenoid valves, which are actuated in combinations to achieve different vehicle behaviors. A rider applies human power input to the vehicle using a standard bicycle crankset. The crankset’s shaft is coupled with a hydraulic pump that draws fluid from a pressure-neutral reservoir. The pump circulates fluid through a bi-directional hydraulic motor that propels the vehicle. The rider can also release fluid from a pressurized accumulator that applies a “boost” to the vehicle’s speed.</p>
 <p>Existing hydraulic and electronic components are provided by HydraForce, Inc. Sourcing all components from a single company lends itself to a well-integrated mechatronics system. However, its functionality is not expandable beyond fluid power control. The system’s industrial Programmable Logic Controller (PLC) only has one inter-controller communication peripheral: CAN bus, and cannot be programmed using open-source languages, such as C++ or Python. This project offers a low-cost, open-source user interface for this mechatronics system using CAN bus.</p>
 <h3><b>Existing Work</b></h3>
 <p>The existing mechatronics system uses a HydraForce ECDR 0506-A electronic valve driver. The vehicle’s operator provides input to the system using three push-buttons, which each represent a unique combination of valve actuations. The ECDR 0506-A, shown in Figure 1, has six inputs, which can be configured to receive an analog voltage or current. With three inputs used for push-buttons, the controller is only capable of reading up to three pressure sensors. An additional CAN node that could relay button presses to the central controller would allow it to interface with additional sensors and inputs.</p>
-<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig1.png" alt="" style="width:400px;height:320px;" class="inline"/> <br  />
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig1.png" alt="" style="width:400px;" class="inline"/> <br  />
 <b>Figure 1.</b> Existing mechatronics system with the ECDR 0506-A valve driver.</p>
 <p>A screen capture of part of the programming for the PLC is shown in Figure 2. The software used for this controller is HF Impulse, which is a tool designed by HydraForce to program their controllers. <br  />
 </p>
-<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig2.png" alt="" style="width:530px;height:300px;" class="inline"/> <br  />
+<p><img src="https://raw.githubusercontent.com/jkochavi/Fluid-Power-Controller/master/wiki_Support_Files/fig2.png" alt="" style="width:530px;" class="inline"/> <br  />
 <b>Figure 2.</b> Screen capture of block programming for the ECDR 0506-A. <br  />
 </p>
 <h3><b>Project Requirements</b></h3>
